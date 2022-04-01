@@ -2,10 +2,15 @@ package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * Internal User Representation
@@ -26,7 +31,7 @@ public class User implements Serializable {
     @Getter
     @Setter
     @Id
-    @GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Setter
@@ -39,6 +44,11 @@ public class User implements Serializable {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Getter
+    @Setter
+    @Column(nullable = false)
+    private String password;
+
     @Setter
     @Getter
     @Column(nullable = false, unique = true)
@@ -48,4 +58,19 @@ public class User implements Serializable {
     @Getter
     @Column(nullable = false)
     private UserStatus status;
+
+    @Getter
+    @Setter
+    @Column(nullable = true, unique = false)
+    private String birthday;
+
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private String email;
+
+    @Getter
+    @Setter
+    @CreationTimestamp
+    private Timestamp creationdate;
 }
