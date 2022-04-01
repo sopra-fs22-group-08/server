@@ -11,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Internal User Representation
@@ -27,6 +28,9 @@ import java.sql.Timestamp;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Deck> decks;
 
     @Getter
     @Setter
