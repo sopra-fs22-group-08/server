@@ -55,6 +55,31 @@ public class UserService {
         return newUser;
     }
 
+    /**
+     * @brief updates the old User with the new Username or the new Birthday
+     *        added
+     */
+    public User updateUser(User currentUser, User userInput) {
+        if (userInput.getUsername() == null) {
+            String baseErrorMessage = "You cannot choose an empty Username!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        if (userInput.getUsername() != null) {
+            User databaseUser = userRepository.findByUsername(userInput.getUsername());
+            if (databaseUser != null && currentUser.getUsername() != databaseUser.getUsername()) {
+                String baseErrorMessage = "You cannot choose this Username. It has already been taken!";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+            } else {
+                currentUser.setUsername(userInput.getUsername());
+            }
+        }
+        if (userInput.getBirthday() != null) {
+            currentUser.setBirthday(userInput.getBirthday());
+        }
+        userRepository.save(currentUser);
+        userRepository.flush();
+        return currentUser;
+    }
 
     /**
      * @brief checks whether user exists
