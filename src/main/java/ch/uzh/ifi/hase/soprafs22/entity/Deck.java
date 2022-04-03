@@ -18,6 +18,8 @@ import java.util.List;
 public class Deck implements Serializable {
 
     //TODO: Figure out how to access User when deckId is given
+
+    //foreign key USER_ID
     @Getter
     @Setter
     @ManyToOne
