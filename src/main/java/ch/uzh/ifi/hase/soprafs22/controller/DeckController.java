@@ -18,6 +18,16 @@ public class DeckController {
     @Autowired
     private DeckRepository deckRepository;
 
+
+
+    @GetMapping("/decks/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Deck getDecksById(@PathVariable("id") long id){
+        Deck deck = deckRepository.findById(id)
+                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Deck with this ID exists:" + id));
+        return deck;
+    }
+
     /**
      * @brief retrieves all Decks based on given ID of User
      *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
@@ -47,5 +57,7 @@ public class DeckController {
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found User with id = " + userId));
         return deck;
     }
+
+
 
 }
