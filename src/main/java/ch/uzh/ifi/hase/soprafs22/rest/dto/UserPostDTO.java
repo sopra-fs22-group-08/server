@@ -5,9 +5,13 @@ import lombok.Setter;
 
 public class UserPostDTO {
 
-    @Getter
     @Setter
-    private String name;
+    @Getter
+    private String firstName;
+
+    @Setter
+    @Getter
+    private String lastName;
 
     @Getter
     @Setter

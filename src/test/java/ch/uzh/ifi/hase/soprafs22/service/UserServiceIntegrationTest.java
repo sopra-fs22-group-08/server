@@ -40,7 +40,8 @@ public class UserServiceIntegrationTest {
         assertNull(userRepository.findByUsername("testUsername"));
 
         User testUser = new User();
-        testUser.setName("testName");
+        testUser.setFirstName("test");
+        testUser.setLastName("name");
         testUser.setUsername("testUsername");
         testUser.setEmail("firstname@email.com");
         testUser.setPassword("testPassword");
@@ -50,7 +51,8 @@ public class UserServiceIntegrationTest {
 
         // then
         assertEquals(testUser.getId(), createdUser.getId());
-        assertEquals(testUser.getName(), createdUser.getName());
+        assertEquals(testUser.getFirstName(), createdUser.getFirstName());
+        assertEquals(testUser.getLastName(), createdUser.getLastName());
         assertEquals(testUser.getUsername(), createdUser.getUsername());
         assertNotNull(createdUser.getToken());
         assertEquals(UserStatus.ONLINE, createdUser.getStatus());
@@ -61,17 +63,19 @@ public class UserServiceIntegrationTest {
         assertNull(userRepository.findByUsername("testUsername"));
 
         User testUser = new User();
-        testUser.setName("testName");
+        testUser.setFirstName("test");
+        testUser.setLastName("name");
         testUser.setUsername("testUsername");
         testUser.setPassword("testPassword");
         testUser.setEmail("testName@email.com");
-        User createdUser = userService.createUser(testUser);
+        userService.createUser(testUser);
 
         // attempt to create second user with same username
         User testUser2 = new User();
 
         // change the name but forget about the username
-        testUser2.setName("testName2");
+        testUser.setFirstName("test");
+        testUser.setLastName("name2");
         testUser2.setUsername("testUsername");
         testUser2.setPassword("testPassword");
         testUser2.setEmail("testName2@email.com");

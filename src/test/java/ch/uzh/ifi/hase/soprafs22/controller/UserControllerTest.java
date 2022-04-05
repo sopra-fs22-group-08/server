@@ -49,7 +49,8 @@ public class UserControllerTest {
     public void givenUsers_whenGetUsers_thenReturnJsonArray() throws Exception {
         // given
         User user = new User();
-        user.setName("Firstname Lastname");
+        user.setFirstName("Firstname");
+        user.setLastName("Lastname");
         user.setUsername("firstname@lastname");
         user.setStatus(UserStatus.OFFLINE);
 
@@ -65,7 +66,8 @@ public class UserControllerTest {
         // then
         mockMvc.perform(getRequest).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(user.getName())))
+                .andExpect(jsonPath("$[0].firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$[0].lastName", is(user.getLastName())))
                 .andExpect(jsonPath("$[0].username", is(user.getUsername())))
                 .andExpect(jsonPath("$[0].status", is(user.getStatus().toString())));
     }
@@ -76,7 +78,8 @@ public class UserControllerTest {
     @Test
     public void getUserOne_isOk() throws Exception {
         User user = new User();
-        user.setName("Firstname Lastname");
+        user.setFirstName("Firstname");
+        user.setLastName("Lastname");
         user.setUsername("firstname@lastname");
         user.setStatus(UserStatus.OFFLINE);
 
@@ -106,13 +109,15 @@ public class UserControllerTest {
         // given
         User user = new User();
         user.setId(1L);
-        user.setName("Test User");
+        user.setFirstName("Test");
+        user.setLastName("User");
         user.setUsername("testUsername");
         user.setToken("1");
         user.setStatus(UserStatus.ONLINE);
 
         UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("Test User");
+        userPostDTO.setFirstName("Test");
+        userPostDTO.setLastName("User");
         userPostDTO.setUsername("testUsername");
 
         given(userService.createUser(Mockito.any())).willReturn(user);
@@ -126,7 +131,8 @@ public class UserControllerTest {
         mockMvc.perform(postRequest)
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(user.getId().intValue())))
-                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.firstName", is(user.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(user.getLastName())))
                 .andExpect(jsonPath("$.username", is(user.getUsername())))
                 .andExpect(jsonPath("$.status", is(user.getStatus().toString())));
     }
@@ -140,13 +146,15 @@ public class UserControllerTest {
 
         User user2 = new User();
         user2.setId(2L);
-        user2.setName("Test User");
+        user2.setFirstName("Test");
+        user2.setLastName("User");
         user2.setUsername("testUsername");
         user2.setToken("2");
         user2.setStatus(UserStatus.ONLINE);
 
         UserPostDTO userPostDTO = new UserPostDTO();
-        userPostDTO.setName("Test User");
+        userPostDTO.setFirstName("Test");
+        userPostDTO.setLastName("User");
         userPostDTO.setUsername("testUsername");
 
         given(userService.createUser(Mockito.any()))
@@ -169,7 +177,8 @@ public class UserControllerTest {
         // given
         User user = new User();
         user.setId(1L);
-        user.setName("Test User");
+        user.setFirstName("Test");
+        user.setLastName("User");
         user.setUsername("updatedUser");
         user.setBirthday("1999-01-01");
         user.setToken("1");
