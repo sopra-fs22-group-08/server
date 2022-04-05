@@ -140,7 +140,7 @@ public class UserService {
 
     /**
      * This is a helper method that will check the uniqueness criteria of the
-     * username and the name
+     * username and the name, the name as a combination of first and last name,
      * defined in the User entity. The method will do nothing if the input is unique
      * and throw an error otherwise.
      *
@@ -150,20 +150,21 @@ public class UserService {
      */
     private void checkIfUserExists(User userToBeCreated) {
         User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-        User userByName = userRepository.findByName(userToBeCreated.getName());
-
+        User userByFirstName = userRepository.findByFirstName(userToBeCreated.getFirstName());
+        User userByLastName = userRepository.findByLastName(userToBeCreated.getLastName());
         String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
-        if (userByUsername != null && userByName != null) {
+
+        if (userByUsername != null && userByFirstName != null && userByLastName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage, "username and the name", "are"));
         } else if (userByUsername != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage, "username", "is"));
-        } else if (userByName != null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
+        } else if (userByFirstName != null && userByLastName != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    String.format(baseErrorMessage, "combination of first and last name", "is"));
         }
     }
-
 
     /**
      * This is a helper method that will send an account verification mail to the
@@ -187,8 +188,7 @@ public class UserService {
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error while sending mail!");
             String baseErrorMessage = "An error while sending the mail occurred";
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));

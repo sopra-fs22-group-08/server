@@ -2,7 +2,6 @@ package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -43,7 +42,12 @@ public class User implements Serializable {
     @Setter
     @Getter
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private String lastName;
 
     @Setter
     @Getter
