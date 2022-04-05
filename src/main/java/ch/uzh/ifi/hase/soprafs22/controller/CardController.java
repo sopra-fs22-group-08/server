@@ -30,9 +30,9 @@ public class CardController {
     @PostMapping("/decks/{deckId}/cards")
     @ResponseStatus(HttpStatus.CREATED)
     public MultipleChoiceCard createCard(@PathVariable("deckId") Long deckId, @RequestBody MultipleChoiceCardPostDTO multipleChoiceCardPostDTO){
-        //convert API card to internal representation
+        //convert API deck to internal representation
         MultipleChoiceCard cardRequest = DTOMapper.INSTANCE.convertMultipleChoiceCardPostDTOtoEntity(multipleChoiceCardPostDTO);
-        //create card and save to card repository
+        //create deck and save to deck repository
         MultipleChoiceCard card = this.deckRepository.findById(deckId).map(deck -> {
             cardRequest.setDeck(deck);
             return cardRepository.save(cardRequest);
