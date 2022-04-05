@@ -150,17 +150,17 @@ public class UserService {
      */
     private void checkIfUserExists(User userToBeCreated) {
         User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
-        User userByFirstName = userRepository.findByFirstName(userToBeCreated.getFirstName());
-        User userByLastName = userRepository.findByLastName(userToBeCreated.getLastName());
+        User userByFirstNameAndLastName = userRepository.findByFirstNameAndLastName(userToBeCreated.getFirstName(),
+                userToBeCreated.getLastName());
         String baseErrorMessage = "The %s provided %s not unique. Therefore, the user could not be created!";
 
-        if (userByUsername != null && userByFirstName != null && userByLastName != null) {
+        if (userByUsername != null && userByFirstNameAndLastName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage, "username and the name", "are"));
         } else if (userByUsername != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage, "username", "is"));
-        } else if (userByFirstName != null && userByLastName != null) {
+        } else if (userByFirstNameAndLastName != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     String.format(baseErrorMessage, "combination of first and last name", "is"));
         }
