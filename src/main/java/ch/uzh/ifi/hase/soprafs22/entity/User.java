@@ -11,6 +11,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Internal User Representation
@@ -28,10 +30,14 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @OneToMany(mappedBy = "user")
+    private List<Deck> decks = new ArrayList<>();
+
+    //primary key
     @Getter
     @Setter
     @Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
