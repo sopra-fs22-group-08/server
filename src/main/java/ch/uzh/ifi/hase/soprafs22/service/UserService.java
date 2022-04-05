@@ -11,7 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
+import com.sendgrid.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -162,4 +163,37 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format(baseErrorMessage, "name", "is"));
         }
     }
+
+
+    /**
+     * This is a helper method that will send an account verification mail to the
+     * defined email address of the newly created user.
+     *
+     * @param toAddress
+     * @throws org.springframework.web.server.ResponseStatusException
+     * @see User
+     */
+    public void sendVerificationMail(String toAddress) {
+        Email from = new Email("noreply@no-brainer.ch");
+        String subject = "Welcome to No Brainer";
+        Email to = new Email(toAddress);
+        Content content = new Content("text/plain", " - The last learning app you'll ever need!");
+        Mail mail = new Mail(from, subject, to, content);
+
+        SendGrid sg = new SendGrid("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");
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+        }
+        catch (IOException ex) {
+            System.out.println("Error while sending mail!");
+            String baseErrorMessage = "An error while sending the mail occurred";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+        }
+        System.out.println("Mail sent successfully to: " + toAddress.toString());
+    }
+
 }
