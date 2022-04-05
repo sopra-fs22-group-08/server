@@ -114,4 +114,16 @@ public class UserController {
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(logoutUser);
     }
 
+    /**
+     * @brief sends verification email to user -> PutMapping
+                PUT MAPPING: HTTP.Status code = 200 OK
+     */
+    @PutMapping("/users/{userId}/verification")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void sendVerification(@PathVariable("userId") long userId) {
+        User toVerify = userService.getUserbyID(userId);
+        userService.sendVerificationMail(toVerify.getEmail());
+    }
+
 }
