@@ -129,8 +129,8 @@ public class UserService {
      */
     public User setOffline(User user) {
         // long id = user.getId();
-        String userName = user.getUsername();
         // User logoutUser = userRepository.findById(id);
+        String userName = user.getUsername();
         User logoutUser = userRepository.findByUsername(userName);
         logoutUser.setStatus(UserStatus.OFFLINE);
         userRepository.save(logoutUser);
@@ -180,7 +180,7 @@ public class UserService {
         Content content = new Content("text/plain", " - The last learning app you'll ever need!");
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid("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");
+        SendGrid sg = new SendGrid(""); // TODO: add API key
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
