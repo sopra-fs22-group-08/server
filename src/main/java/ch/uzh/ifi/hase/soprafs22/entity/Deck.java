@@ -1,11 +1,9 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.xml.bind.v2.TODO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.io.Serializable;
