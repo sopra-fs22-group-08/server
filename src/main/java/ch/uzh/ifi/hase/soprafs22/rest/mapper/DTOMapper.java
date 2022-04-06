@@ -1,11 +1,10 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs22.entity.Card;
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
+import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPutDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -57,4 +56,8 @@ public interface DTOMapper {
     @Mapping(source = "deckname", target = "deckname")
     Deck convertDeckPostDTOtoEntity(DeckPostDTO deckPostDTO);
 
+    @Mapping(source = "question", target = "question")
+    @Mapping(source = "answer", target = "answer")
+    @Mapping(source = "options", target = "options")
+    MultipleChoiceCard convertMultipleChoiceCardPostDTOtoEntity(MultipleChoiceCardPostDTO multipleChoiceCardPostDTO);
 }
