@@ -39,7 +39,7 @@ public class CardController {
         //convert API deck to internal representation
         MultipleChoiceCard mcCardRequest = DTOMapper.INSTANCE.convertMultipleChoiceCardPostDTOtoEntity(multipleChoiceCardPostDTO);
         //create deck and save to deck repository
-        MultipleChoiceCard mcCreatedCard = mccardService.createCard(deckId, mcCardRequest);
+        MultipleChoiceCard mcCreatedCard = mccardService.createMCCard(deckId, mcCardRequest);
 
         return mcCreatedCard;
     }

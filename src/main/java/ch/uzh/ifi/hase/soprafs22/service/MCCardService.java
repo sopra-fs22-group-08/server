@@ -27,7 +27,7 @@ public class MCCardService {
     /**
      * @brief adds new Card to Deck with given ID or returns: 404 Not Found
      */
-    public MultipleChoiceCard createCard(Long deckId, MultipleChoiceCard cardRequest){
+    public MultipleChoiceCard createMCCard(Long deckId, MultipleChoiceCard cardRequest){
         MultipleChoiceCard card = this.deckRepository.findById(deckId).map(deck -> {
             cardRequest.setDeck(deck);
             return cardRepository.save(cardRequest);
