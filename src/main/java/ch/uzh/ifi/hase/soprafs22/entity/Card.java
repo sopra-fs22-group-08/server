@@ -17,6 +17,6 @@ public abstract class Card {
 
     @Getter
     @Setter
-    @Column(name="question", nullable = false)
+    @Column(name="answer", nullable = false)
     private String answer;
 }
