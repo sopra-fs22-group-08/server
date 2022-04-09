@@ -14,7 +14,11 @@ public class UserGetDTO {
 
     @Setter
     @Getter
-    private String name;
+    private String firstName;
+
+    @Setter
+    @Getter
+    private String lastName;
 
     @Getter
     @Setter
