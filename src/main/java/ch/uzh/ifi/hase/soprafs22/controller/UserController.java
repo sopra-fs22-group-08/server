@@ -91,11 +91,11 @@ public class UserController {
      *         PUT MAPPING: Http.status code = 200 OK. Error => HTTP Status Code:
      *         NOT_Found
      */
-    @PutMapping("/login")
+    @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public UserGetDTO checkLogin(@RequestBody UserPutDTO userPutDTO) {
-        User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
+    public UserGetDTO checkLogin(@RequestBody UserPostDTO userPostDTO) {
+        User userInput = DTOMapper.INSTANCE.convertUserPostDTOtoEntity(userPostDTO);
         User user = userService.checkLoginData(userInput);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(user);
     }
