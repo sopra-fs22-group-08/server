@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs22.entity.Card;
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
 import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
