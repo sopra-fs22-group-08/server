@@ -1,23 +1,24 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
-import ch.uzh.ifi.hase.soprafs22.entity.Deck;
-import ch.uzh.ifi.hase.soprafs22.repository.DeckRepository;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import ch.uzh.ifi.hase.soprafs22.entity.Deck;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPostDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
+import ch.uzh.ifi.hase.soprafs22.service.DeckService;
+
 @RestController
 public class DeckController {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private DeckRepository deckRepository;
+    private DeckService deckService;
 
     /**
      * @brief retrieves Decks based on given ID of a Deck
@@ -26,11 +27,10 @@ public class DeckController {
      */
     @GetMapping("/decks/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Deck getDecksById(@PathVariable("id") long id){
-        //get deck by id from repository
-        Deck deck = deckRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "No Deck with this ID exists:" + id));
-        return deck;
+    public Deck getDecksById(@PathVariable("id") long id) {
+        // get deck by id from repository
+        Deck deckToBeReturned = deckService.getDecksById(id);
+        return deckToBeReturned;
     }
 
     /**
@@ -40,14 +40,9 @@ public class DeckController {
      */
     @GetMapping("/users/{userId}/decks")
     @ResponseStatus(HttpStatus.OK)
-    public List<Deck> getDecksByUserId(@PathVariable("userId") long userId){
-        //check for existence of user
-        if(!userRepository.existsById(userId)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not find with this id: "+ userId);
-        }
-        //fetch all decks of user in the internal representation
-        List<Deck> decks = this.deckRepository.findDeckByUserId(userId);
-        return decks;
+    public List<Deck> getDecksByUserId(@PathVariable("userId") long userId) {
+        List<Deck> decksToBeReturned = deckService.getDecksByUserId(userId);
+        return decksToBeReturned;
     }
 
     /**
@@ -57,18 +52,11 @@ public class DeckController {
      */
     @PostMapping("/users/{userId}/decks")
     @ResponseStatus(HttpStatus.CREATED)
-    public Deck createDeck(@PathVariable("userId") Long userId, @RequestBody DeckPostDTO deckPostDTO){
-        //convert API deck to internal representation
+    public Deck createDeck(@PathVariable("userId") Long userId, @RequestBody DeckPostDTO deckPostDTO) {
+        // convert API deck to internal representation
         Deck deckRequest = DTOMapper.INSTANCE.convertDeckPostDTOtoEntity(deckPostDTO);
-        //create deck and save to deck repository
-        Deck deck = this.userRepository.findById(userId).map(user -> {
-            deckRequest.setUser(user);
-            return deckRepository.save(deckRequest);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found User with id = " + userId));
-
+        Deck deck = deckService.createDeck(userId, deckRequest);
         return deck;
     }
-
-
 
 }

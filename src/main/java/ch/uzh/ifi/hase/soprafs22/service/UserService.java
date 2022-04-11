@@ -89,12 +89,12 @@ public class UserService {
      */
     public User checkLoginData(User user) {
         String errorMessage;
+        User currUser = userRepository.findByUsername(user.getUsername());
         // check name
-        if (userRepository.findByUsername(user.getUsername()) == null) {
+        if (currUser == null) {
             errorMessage = "Username doesn't exist";
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(errorMessage));
         } else {
-            User currUser = userRepository.findByUsername(user.getUsername());
             String testPassword = user.getPassword();
             String currPassword = currUser.getPassword();
             // check pw
