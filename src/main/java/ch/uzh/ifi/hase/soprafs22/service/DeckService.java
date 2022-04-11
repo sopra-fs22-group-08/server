@@ -1,5 +1,7 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,20 @@ public class DeckService {
                 "User with ID" + userID + " has not been found"));
         return deckToBeReturned;
     }
-    // getDecksById
-    // GetDecksByUserId
+
+    public Deck getDecksById(long id) {
+        Deck deckToBeReturned = deckRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No deck was found with ID: " + id));
+        return deckToBeReturned;
+    }
+
+    public List<Deck> getDecksByUserId(long userID) {
+        // check for existence of user
+        if (!userRepository.existsById(userID)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not find with this id: " + userID);
+        }
+        // fetch all decks of user in the internal representation
+        List<Deck> decksToBeReturned = this.deckRepository.findDeckByUserId(userID);
+        return decksToBeReturned;
+    }
 }
