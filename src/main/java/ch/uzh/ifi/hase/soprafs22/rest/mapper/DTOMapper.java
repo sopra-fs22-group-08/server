@@ -59,4 +59,11 @@ public interface DTOMapper {
     @Mapping(source = "answer", target = "answer")
     @Mapping(source = "options", target = "options")
     MultipleChoiceCard convertMultipleChoiceCardPostDTOtoEntity(MultipleChoiceCardPostDTO multipleChoiceCardPostDTO);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "question", target = "question")
+    @Mapping(source = "answer", target = "answer")
+    @Mapping(source = "options", target = "options")
+    MultipleChoiceCardGetDTO convertEntityToMultipleChoiceCardGetDTO(MultipleChoiceCard multipleChoiceCard);
+
 }

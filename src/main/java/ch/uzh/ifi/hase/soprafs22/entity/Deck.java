@@ -33,7 +33,7 @@ public class Deck implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long deckId;
+    private Long id;
 
     @Getter
     @Setter

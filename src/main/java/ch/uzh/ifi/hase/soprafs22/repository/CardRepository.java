@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository("multipleChoiceCardRepository")
 public interface CardRepository extends JpaRepository<MultipleChoiceCard, Long> {
-    List<MultipleChoiceCard> findCardByCardId(Long cardId);
+    List<MultipleChoiceCard> findCardByDeckId(Long deckId);
+
 }
