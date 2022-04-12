@@ -1,6 +1,5 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
-import ch.uzh.ifi.hase.soprafs22.entity.Card;
 import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
 import ch.uzh.ifi.hase.soprafs22.repository.CardRepository;
 import ch.uzh.ifi.hase.soprafs22.repository.DeckRepository;
@@ -39,7 +38,7 @@ public class MCCardService {
         return card;
     }
 
-    public List<MultipleChoiceCard> getCards(Long deckId){
+    public List<MultipleChoiceCard> getCardsByDeckId(Long deckId){
         //check for existence of deck
         if(!deckRepository.existsById(deckId)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck not find with this id: "+ deckId);

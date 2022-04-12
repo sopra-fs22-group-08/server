@@ -57,8 +57,7 @@ public class CardController {
     public List<MultipleChoiceCardGetDTO> getCardsByDeckId(@PathVariable("deckId") Long deckId){
 
         //fetch all cards of deck in the internal representation
-        //List<MultipleChoiceCard> multipleChoiceCards = this.mccardService.getCards(deckId);
-        List<MultipleChoiceCard> multipleChoiceCards = this.mccardService.getCards(deckId);
+        List<MultipleChoiceCard> multipleChoiceCards = this.mccardService.getCardsByDeckId(deckId);
         List<MultipleChoiceCardGetDTO> multipleChoiceCardGetDTOs = new ArrayList<>();
 
         for (MultipleChoiceCard mccard: multipleChoiceCards) {
