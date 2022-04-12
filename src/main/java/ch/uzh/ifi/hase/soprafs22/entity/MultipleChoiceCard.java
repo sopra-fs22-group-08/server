@@ -8,16 +8,26 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
+// BUG: Tried abstract class CARD but abstract class attributes get saved as null - don't know how to fix
 @Entity
 @Table(name="MC_CARD")
-public class MultipleChoiceCard extends Card implements Serializable {
+public class MultipleChoiceCard implements Serializable {
+    @Getter
+    @Setter
+    @Column(name="question", nullable = false)
+    private String question;
+
+    @Getter
+    @Setter
+    @Column(name="answer", nullable = false)
+    private String answer;
+
     @Getter
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Long cardId;
+    private Long id;
 
     @Getter
     @Setter

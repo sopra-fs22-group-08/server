@@ -1,20 +1,23 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
-import ch.uzh.ifi.hase.soprafs22.entity.Card;
 import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
 import ch.uzh.ifi.hase.soprafs22.repository.CardRepository;
 import ch.uzh.ifi.hase.soprafs22.repository.DeckRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
 public class MCCardService {
 
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
     private final CardRepository cardRepository;
     private final DeckRepository deckRepository;
 
@@ -33,5 +36,15 @@ public class MCCardService {
             return cardRepository.save(cardRequest);
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Not found Deck with id = " + deckId));
         return card;
+    }
+
+    public List<MultipleChoiceCard> getCardsByDeckId(Long deckId){
+        //check for existence of deck
+        if(!deckRepository.existsById(deckId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck not find with this id: "+ deckId);
+        }
+        //fetch all cards of deck in the internal representation
+        List<MultipleChoiceCard> multipleChoiceCards = this.cardRepository.findCardByDeckId(deckId);
+        return multipleChoiceCards;
     }
 }
