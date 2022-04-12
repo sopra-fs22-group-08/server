@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name="DECK")
 public class Deck implements Serializable {
 
-    //TODO: Figure out how to access User when deckId is given
+    // TODO: Figure out how to access User when deckId is given
     @OneToMany(mappedBy = "deck")
     private List<MultipleChoiceCard> cards = new ArrayList<>();
 
