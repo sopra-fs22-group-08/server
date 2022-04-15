@@ -66,4 +66,9 @@ public interface DTOMapper {
     @Mapping(source = "options", target = "options")
     MultipleChoiceCardGetDTO convertEntityToMultipleChoiceCardGetDTO(MultipleChoiceCard multipleChoiceCard);
 
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "deckname", target = "deckname")
+    @Mapping(source = "creationdate", target = "creationdate")
+    DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
+
 }

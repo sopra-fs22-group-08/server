@@ -1,7 +1,9 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckGetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +43,15 @@ public class DeckController {
      */
     @GetMapping("/users/{userId}/decks")
     @ResponseStatus(HttpStatus.OK)
-    public List<Deck> getDecksByUserId(@PathVariable("userId") long userId) {
+    public List<DeckGetDTO> getDecksByUserId(@PathVariable("userId") long userId) {
+        //fetch all cards of deck in the internal representation
         List<Deck> decksToBeReturned = deckService.getDecksByUserId(userId);
-        return decksToBeReturned;
+        List<DeckGetDTO> deckGetDTOS = new ArrayList<>();
+        //convert internal representation deck to API deck
+        for(Deck deck: decksToBeReturned){
+            deckGetDTOS.add(DTOMapper.INSTANCE.convertEntityToDeckGetDTO(deck));
+        }
+        return deckGetDTOS;
     }
 
     /**
