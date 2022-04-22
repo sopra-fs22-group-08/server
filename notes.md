@@ -7,3 +7,4 @@ Multiplayer:
   - game logic:
     - each player gets x seconds to answer:
       - correct answer gets multiplied with time factor (remaining factor)
+      - live or async

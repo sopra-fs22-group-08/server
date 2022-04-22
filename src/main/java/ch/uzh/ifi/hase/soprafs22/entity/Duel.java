@@ -22,14 +22,17 @@ public class Duel {
     @Getter
     @Setter
     @Column(nullable = false)
+    private long deckId;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
     private long playerOneId;
-    // private User playerOne;
 
     @Getter
     @Setter
     @Column(nullable = false)
     private long playerTwoId;
-    // private User playerTwo;
 
     @Getter
     @Setter

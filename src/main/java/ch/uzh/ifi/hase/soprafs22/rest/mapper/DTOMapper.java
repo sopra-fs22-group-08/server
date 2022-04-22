@@ -72,10 +72,12 @@ public interface DTOMapper {
     @Mapping(source = "creationdate", target = "creationdate")
     DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
 
+    @Mapping(source = "deckId", target = "deckId")
     @Mapping(source = "playerOneId", target = "playerOneId")
     @Mapping(source = "playerTwoId", target = "playerTwoId")
     Duel convertDuelPostDtoToEntity(DuelPostDTO duelPostDTO);
 
+    @Mapping(source = "deckId", target = "deckId")
     @Mapping(source = "playerOneId", target = "playerOneId")
     @Mapping(source = "playerTwoId", target = "playerTwoId")
     @Mapping(source = "playerOneScore", target = "playerOneScore")
