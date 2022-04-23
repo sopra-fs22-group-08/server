@@ -9,6 +9,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "USER")
-public class User implements Serializable {
+public class User implements Serializable, Principal {
 
     private static final long serialVersionUID = 1L;
 
@@ -83,4 +84,10 @@ public class User implements Serializable {
     @Setter
     @CreationTimestamp
     private Timestamp creationdate;
+
+    // override from Principal
+    @Override
+    public String getName() {
+        return this.username;
+    }
 }
