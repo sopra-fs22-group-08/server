@@ -51,4 +51,8 @@ public class DeckService {
         List<Deck> decksToBeReturned = this.deckRepository.findDeckByUserId(userID);
         return decksToBeReturned;
     }
+
+    public List<Deck> getDecks() {
+        return this.deckRepository.findAll();
+    }
 }
