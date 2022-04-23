@@ -8,7 +8,7 @@ import java.util.List;
 public class MultipleChoiceCardGetDTO {
     @Getter
     @Setter
-    private String id;
+    private int id;
 
     @Getter
     @Setter
