@@ -24,6 +24,23 @@ public class DeckController {
     private DeckService deckService;
 
     /**
+     * @brief retrieves ALL "public" Decks from database.
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
+     *        Found
+     */
+    @GetMapping("/decks")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DeckGetDTO> getAllPublicDecks(){
+        List<Deck> decks = deckService.getDecks();
+        List<DeckGetDTO> deckGetDTOs = new ArrayList<>();
+
+        for(Deck deck : decks){
+            deckGetDTOs.add(DTOMapper.INSTANCE.convertEntityToDeckGetDTO(deck));
+        }
+        return deckGetDTOs;
+
+    }
+    /**
      * @brief retrieves Decks based on given ID of a Deck
      *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
      *        Found
