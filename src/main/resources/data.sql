@@ -81,6 +81,7 @@ INSERT INTO `DECK` (
 -- inserting cards
 -------------------
 
+-- insert card 1 of deck 1
 INSERT INTO `MC_CARD` (
     ID,
     ANSWER,
@@ -123,4 +124,139 @@ INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
 ) VALUES (
     1,
     'test_4'
+);
+
+-- insert card 2 of deck 1
+INSERT INTO `MC_CARD` (
+    ID,
+    ANSWER,
+    QUESTION,
+    DECK_ID
+) VALUES (
+    2,
+    'not test_1',
+    'Which one is NOT correct?',
+    1
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    2,
+    'not test_1'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    2,
+    'not test_2'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    2,
+    'not test_3'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    2,
+    'not test_4'
+);
+
+-- insert card 1 of deck 2
+INSERT INTO `MC_CARD` (
+    ID,
+    ANSWER,
+    QUESTION,
+    DECK_ID
+) VALUES (
+    3,
+    'test_1',
+    'Which answer of card1/deck2 is correct?',
+    2
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    3,
+    'test_1'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    3,
+    'test_2'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    3,
+    'test_3'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    3,
+    'test_4'
+);
+
+-- insert card 2 of deck 2
+INSERT INTO `MC_CARD` (
+    ID,
+    ANSWER,
+    QUESTION,
+    DECK_ID
+) VALUES (
+    4,
+    'not test_1',
+    'Which answer of card1/deck2 is NOT correct?',
+    2
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    4,
+    'not test_1'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    4,
+    'not test_2'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    4,
+    'not test_3'
+);
+
+INSERT INTO `MULTIPLE_CHOICE_CARD_OPTIONS` (
+    MULTIPLE_CHOICE_CARD_ID,
+    OPTIONS
+) VALUES (
+    4,
+    'not test_4'
 );
