@@ -2,6 +2,7 @@ package ch.uzh.ifi.hase.soprafs22.entity;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -26,12 +27,18 @@ import java.util.List;
  */
 @Entity
 @Table(name = "USER")
+@NoArgsConstructor
 public class User implements Serializable, Principal {
 
     private static final long serialVersionUID = 1L;
 
     @OneToMany(mappedBy = "user")
     private List<Deck> decks = new ArrayList<>();
+
+    // BUG: custom constructor for the principal
+    public User(String name) {
+        this.username = name;
+    }
 
     //primary key
     @Getter
@@ -86,6 +93,9 @@ public class User implements Serializable, Principal {
     private Timestamp creationdate;
 
     // override from Principal
+    /*
+     * @returns returns the username for the simp to checkt
+     */
     @Override
     public String getName() {
         return this.username;
