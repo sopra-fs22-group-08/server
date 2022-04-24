@@ -29,8 +29,7 @@ public class InvitationController {
     public void send(SimpMessageHeaderAccessor sha,
                      @Payload String username) {
         String greeting = "Hello from " + sha.getUser().getName();
-
-        simpMessagingTemplate.convertAndSendToUser(username, "/queue/invite/greetings", greeting);
+        simpMessagingTemplate
+            .convertAndSendToUser(username, "/queue/invite/greetings", greeting);
     }
-
 }

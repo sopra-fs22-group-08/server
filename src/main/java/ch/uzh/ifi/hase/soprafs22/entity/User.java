@@ -92,8 +92,8 @@ public class User implements Serializable, Principal {
     @CreationTimestamp
     private Timestamp creationdate;
 
-    // override from Principal
     /*
+     * @brief override from Principal
      * @returns returns the username for the simp to checkt
      */
     @Override
