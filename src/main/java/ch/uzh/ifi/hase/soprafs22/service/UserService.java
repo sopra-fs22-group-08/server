@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs22.service;
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,7 +182,8 @@ public class UserService {
         Content content = new Content("text/plain", " - The last learning app you'll ever need!");
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid(""); // TODO: add API key
+        Dotenv dotenv = Dotenv.load();
+        SendGrid sg = new SendGrid(dotenv.get("EMAIL_TOKEN"));
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
