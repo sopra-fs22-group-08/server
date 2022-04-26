@@ -3,20 +3,17 @@ package ch.uzh.ifi.hase.soprafs22.rest.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * DuelPostDTO
- */
-public class DuelPostDTO {
+public class InvitationPostDTO {
+    @Getter
+    @Setter
+    private Long senderId;
 
     @Getter
     @Setter
-    private Long playerOneId;
+    private Long receiverId;
 
     @Getter
     @Setter
-    private Long deckId;
+    private Long duelId;
 
-    @Getter
-    @Setter
-    private Long playerTwoId;
 }

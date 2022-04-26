@@ -9,25 +9,25 @@ import lombok.Setter;
 public class DuelGetDTO {
     @Getter
     @Setter
-    private long id;
+    private Long id;
 
     @Getter
     @Setter
-    private long deckId;
+    private Long deckId;
 
     @Getter
     @Setter
-    private long playerOneId;
+    private Long playerOneId;
 
     @Getter
     @Setter
-    private long playerTwoId;
+    private Long playerTwoId;
 
     @Getter
     @Setter
-    private long playerOneScore;
+    private Long playerOneScore;
 
     @Getter
     @Setter
-    private long playerTwoScore;
+    private Long playerTwoScore;
 }

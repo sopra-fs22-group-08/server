@@ -1,9 +1,6 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
-import ch.uzh.ifi.hase.soprafs22.entity.Deck;
-import ch.uzh.ifi.hase.soprafs22.entity.Duel;
-import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.entity.*;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
 
 import org.mapstruct.*;
@@ -83,4 +80,14 @@ public interface DTOMapper {
     @Mapping(source = "playerOneScore", target = "playerOneScore")
     @Mapping(source = "playerTwoScore", target = "playerTwoScore")
     DuelGetDTO convertEntityToDuelGetDTO(Duel duel);
+
+    @Mapping(source = "receiverId", target ="receiverId" )
+    @Mapping(source = "senderId", target =  "senderId")
+    @Mapping(source = "duelId", target = "duelId")
+    Invitation convertInvitationPostDTOToEntity(InvitationPostDTO invitationPostDTO);
+
+    @Mapping(source = "receiverId", target ="receiverId" )
+    @Mapping(source = "senderId", target =  "senderId")
+    @Mapping(source = "duelId", target = "duelId")
+    InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
 }

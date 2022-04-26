@@ -32,6 +32,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Deck> decks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Invitation> invitations = new ArrayList<>();
+
     //primary key
     @Getter
     @Setter
