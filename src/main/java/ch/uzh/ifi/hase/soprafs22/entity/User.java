@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.security.Principal;
@@ -97,6 +98,7 @@ public class User implements Serializable, Principal {
      * @returns returns the username for the simp to checkt
      */
     @Override
+    @NonNull
     public String getName() {
         return this.username;
     }
