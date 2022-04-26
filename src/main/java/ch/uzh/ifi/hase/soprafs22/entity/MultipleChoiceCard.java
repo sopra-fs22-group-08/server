@@ -41,5 +41,5 @@ public class MultipleChoiceCard implements Serializable {
     @Getter
     @Setter
     @ElementCollection
-    private List<String> options = new ArrayList<>();
+    private List<String> options;
 }
