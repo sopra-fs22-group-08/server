@@ -42,3 +42,6 @@ local.properties
 .vscode/launch.json
 bin/main/application.properties
 bin/**/*.sql
+
+# secrets
+.env
