@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
+import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,4 +45,14 @@ public class Duel {
     @Setter
     @Column(nullable = false)
     private long playerTwoScore;
+
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private PlayerStatus playerOneStatus;
+
+    @Setter
+    @Getter
+    @Column(nullable = false)
+    private PlayerStatus playerTwoStatus;
 }

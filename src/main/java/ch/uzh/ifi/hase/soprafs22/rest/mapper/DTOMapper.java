@@ -74,20 +74,32 @@ public interface DTOMapper {
     @Mapping(source = "playerTwoId", target = "playerTwoId")
     Duel convertDuelPostDtoToEntity(DuelPostDTO duelPostDTO);
 
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "deckId", target = "deckId")
     @Mapping(source = "playerOneId", target = "playerOneId")
     @Mapping(source = "playerTwoId", target = "playerTwoId")
     @Mapping(source = "playerOneScore", target = "playerOneScore")
     @Mapping(source = "playerTwoScore", target = "playerTwoScore")
+    @Mapping(source = "playerOneStatus", target = "playerOneStatus")
+    @Mapping(source = "playerTwoStatus", target = "playerTwoStatus")
     DuelGetDTO convertEntityToDuelGetDTO(Duel duel);
 
     @Mapping(source = "receiverId", target ="receiverId" )
     @Mapping(source = "senderId", target =  "senderId")
     @Mapping(source = "duelId", target = "duelId")
+    @Mapping(source = "deckId", target = "deckId")
+    @Mapping(source = "deckname", target = "deckname")
+    @Mapping(source = "senderUsername", target = "senderUsername")
+    @Mapping(source = "receiverUsername", target = "receiverUsername")
     Invitation convertInvitationPostDTOToEntity(InvitationPostDTO invitationPostDTO);
 
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "receiverId", target ="receiverId" )
     @Mapping(source = "senderId", target =  "senderId")
+    @Mapping(source = "deckId", target =  "deckId")
+    @Mapping(source = "deckname", target =  "deckname")
     @Mapping(source = "duelId", target = "duelId")
+    @Mapping(source = "senderUsername", target = "senderUsername")
+    @Mapping(source = "receiverUsername", target = "receiverUsername")
     InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
 }

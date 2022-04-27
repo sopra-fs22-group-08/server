@@ -10,5 +10,5 @@ import ch.uzh.ifi.hase.soprafs22.entity.Duel;
  */
 @Repository("duelRepository")
 public interface DuelRepository extends JpaRepository<Duel, Long> {
-
+    Duel findById(long id);
 }

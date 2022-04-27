@@ -36,6 +36,16 @@ public class Invitation implements Serializable{
 
     @Getter
     @Setter
+    @Column(nullable=false)
+    private Long deckId;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
+    private String deckname;
+
+    @Getter
+    @Setter
     @Column(nullable = false)
     private Long senderId;
 
@@ -43,4 +53,14 @@ public class Invitation implements Serializable{
     @Setter
     @Column(nullable = false)
     private Long receiverId;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
+    private String senderUsername;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
+    private String receiverUsername;
 }

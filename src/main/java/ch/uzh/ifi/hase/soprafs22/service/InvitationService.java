@@ -48,4 +48,15 @@ public class InvitationService {
         List<Invitation> invitationsToBeReturned= this.invitationRepository.findInvitationByUserId(userId);
         return invitationsToBeReturned;
     }
+
+    public void deleteInvitationById(long invitationId) {
+        try {
+            invitationRepository.deleteById(invitationId);
+        }catch (Exception e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Invitation with ID " + invitationId + " does NOT exist"
+            );
+        }
+    }
 }

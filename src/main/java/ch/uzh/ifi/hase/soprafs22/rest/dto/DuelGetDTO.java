@@ -1,7 +1,10 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
+import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Column;
 
 /**
  * DuelGetDTO
@@ -30,4 +33,12 @@ public class DuelGetDTO {
     @Getter
     @Setter
     private Long playerTwoScore;
+
+    @Setter
+    @Getter
+    private PlayerStatus playerOneStatus;
+
+    @Setter
+    @Getter
+    private PlayerStatus playerTwoStatus;
 }

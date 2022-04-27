@@ -37,10 +37,19 @@ public class InvitationController {
     //TODO: unnecessary receiverId in invitationPostDTO can be changed
     @PostMapping("/users/{receiverId}/invitation")
     @ResponseStatus(HttpStatus.CREATED)
-    public Invitation createInvitation(@PathVariable("receiverId") Long receiverId, @RequestBody InvitationPostDTO invitationPostDTO) {
+    public Invitation createInvitation(
+            @PathVariable("receiverId") Long receiverId,
+            @RequestBody InvitationPostDTO invitationPostDTO) {
         // convert API invitation to internal representation
         Invitation invitationRequest = DTOMapper.INSTANCE.convertInvitationPostDTOToEntity(invitationPostDTO);
         Invitation invitation = invitationService.createInvitation(receiverId, invitationRequest);
         return invitation;
     }
+
+    @DeleteMapping("/invitations/{invitationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInvitation(@PathVariable(value = "invitationId") long invitationId){
+        invitationService.deleteInvitationById(invitationId);
+    }
+
 }

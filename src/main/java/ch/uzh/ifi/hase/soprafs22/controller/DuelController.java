@@ -1,12 +1,9 @@
 package ch.uzh.ifi.hase.soprafs22.controller;
 
+import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ch.uzh.ifi.hase.soprafs22.entity.Duel;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.DuelGetDTO;
@@ -36,5 +33,19 @@ public class DuelController {
         Duel duelToBeCreated = DTOMapper.INSTANCE.convertDuelPostDtoToEntity(duelPostDTO);
         Duel createdDuel = duelService.createDuel(duelToBeCreated);
         return DTOMapper.INSTANCE.convertEntityToDuelGetDTO(createdDuel);
+    }
+
+    @DeleteMapping("/duels/{duelId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteInvitation(@PathVariable(value = "duelId") long duelId){
+        duelService.deleteDuelById(duelId);
+    }
+
+    //TODO: Problem with Enumeration
+    @PutMapping("/duels/{duelId}/players/{playerId}/status")
+    public void updateDuel(@PathVariable (name = "duelId") long duelId,
+                                         @PathVariable(name = "playerId") long playerId,
+                                         @RequestParam("playerStatus") PlayerStatus playerStatus){
+        duelService.updatePlayerStatus(duelId, playerId, playerStatus);
     }
 }
