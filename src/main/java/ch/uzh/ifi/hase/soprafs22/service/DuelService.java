@@ -5,7 +5,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +75,9 @@ public class DuelService {
             duelRepository.save(duel);
             duelRepository.flush();
         }
+    }
+
+    public List<Duel> getDuels() {
+        return duelRepository.findAll();
     }
 }

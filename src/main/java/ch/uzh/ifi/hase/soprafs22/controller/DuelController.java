@@ -11,6 +11,9 @@ import ch.uzh.ifi.hase.soprafs22.rest.dto.DuelPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs22.service.DuelService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * DuelController
  */
@@ -41,11 +44,24 @@ public class DuelController {
         duelService.deleteDuelById(duelId);
     }
 
-    //TODO: Problem with Enumeration
-    @PutMapping("/duels/{duelId}/players/{playerId}/status")
+    @GetMapping("/duels")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<DuelGetDTO> getAllPublicDecks(){
+        List<Duel> duels = duelService.getDuels();
+        List<DuelGetDTO> duelGetDTOs = new ArrayList<>();
+
+        for(Duel duel : duels){
+            duelGetDTOs.add(DTOMapper.INSTANCE.convertEntityToDuelGetDTO(duel));
+        }
+        return duelGetDTOs;
+
+    }
+
+    @PutMapping("/duels/{duelId}/players/{playerId}/status/{playerStatus}")
     public void updateDuel(@PathVariable (name = "duelId") long duelId,
                                          @PathVariable(name = "playerId") long playerId,
-                                         @RequestParam("playerStatus") PlayerStatus playerStatus){
+                                         @PathVariable(name = "playerStatus") PlayerStatus playerStatus){
         duelService.updatePlayerStatus(duelId, playerId, playerStatus);
     }
 }
