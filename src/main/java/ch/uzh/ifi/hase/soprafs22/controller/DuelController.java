@@ -24,7 +24,7 @@ public class DuelController {
     private DuelService duelService;
 
     @PostMapping("/duels")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public DuelGetDTO createDuel(@RequestBody DuelPostDTO duelPostDTO) {
         /*
@@ -67,7 +67,7 @@ public class DuelController {
         return duelGetDTO;
 
     }
-
+    //TODO: Duel should be deleted when both players are finished
     @PutMapping("/duels/{duelId}/players/{playerId}/status/{playerStatus}")
     @ResponseStatus(HttpStatus.OK)
     public void updateDuelStatus(@PathVariable (name = "duelId") long duelId,

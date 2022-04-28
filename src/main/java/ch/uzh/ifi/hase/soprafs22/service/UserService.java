@@ -149,6 +149,7 @@ public class UserService {
      * @throws org.springframework.web.server.ResponseStatusException
      * @see User
      */
+    //TODO: Change Status Code to 409 CONFLICT
     private void checkIfUserExists(User userToBeCreated) {
         User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
         User userByFirstNameAndLastName = userRepository.findByFirstNameAndLastName(userToBeCreated.getFirstName(),

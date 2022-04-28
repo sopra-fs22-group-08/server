@@ -41,7 +41,7 @@ public class MCCardService {
     public List<MultipleChoiceCard> getCardsByDeckId(Long deckId){
         //check for existence of deck
         if(!deckRepository.existsById(deckId)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck not find with this id: "+ deckId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck not found with this id: "+ deckId);
         }
         //fetch all cards of deck in the internal representation
         List<MultipleChoiceCard> multipleChoiceCards = this.cardRepository.findCardByDeckId(deckId);
