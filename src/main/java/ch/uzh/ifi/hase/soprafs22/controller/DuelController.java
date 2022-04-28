@@ -59,9 +59,21 @@ public class DuelController {
     }
 
     @PutMapping("/duels/{duelId}/players/{playerId}/status/{playerStatus}")
-    public void updateDuel(@PathVariable (name = "duelId") long duelId,
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDuelStatus(@PathVariable (name = "duelId") long duelId,
                                          @PathVariable(name = "playerId") long playerId,
                                          @PathVariable(name = "playerStatus") PlayerStatus playerStatus){
         duelService.updatePlayerStatus(duelId, playerId, playerStatus);
     }
+
+    @PutMapping("/duels/{duelId}/players/{playerId}/score/{newScore}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDuelScore(@PathVariable (name = "duelId") long duelId,
+                                @PathVariable(name = "playerId") long playerId,
+                                @PathVariable(name = "newScore") long newScore){
+        duelService.updatePlayerScore(duelId, playerId, newScore);
+
+    }
+
+
 }

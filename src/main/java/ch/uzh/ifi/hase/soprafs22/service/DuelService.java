@@ -80,4 +80,21 @@ public class DuelService {
     public List<Duel> getDuels() {
         return duelRepository.findAll();
     }
+
+    public void updatePlayerScore(long duelId, long playerId, long newScore) {
+        Duel duel = duelRepository.findById(duelId);
+        if(duel == null){
+            String baseErrorMessage = "The duel with ID " +duelId+  " does not exist";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+        }else{
+            long playerOneId = duel.getPlayerOneId();
+            if (playerOneId == playerId){
+                duel.setPlayerOneScore(newScore);
+            }else{
+                duel.setPlayerTwoScore(newScore);
+            }
+            duelRepository.save(duel);
+            duelRepository.flush();
+        }
+    }
 }
