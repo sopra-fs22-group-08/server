@@ -97,4 +97,14 @@ public class DuelService {
             duelRepository.flush();
         }
     }
+
+    public Duel getDuelById(long duelId) {
+        Duel foundDuel = duelRepository.findById(duelId);
+        if (foundDuel == null) {
+            String baseErrorMessage = "A duel with ID" + duelId + " does NOT exist";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
+        } else {
+            return foundDuel;
+        }
+    }
 }

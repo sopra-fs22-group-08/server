@@ -47,7 +47,7 @@ public class DuelController {
     @GetMapping("/duels")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<DuelGetDTO> getAllPublicDecks(){
+    public List<DuelGetDTO> getAllDuels(){
         List<Duel> duels = duelService.getDuels();
         List<DuelGetDTO> duelGetDTOs = new ArrayList<>();
 
@@ -55,6 +55,16 @@ public class DuelController {
             duelGetDTOs.add(DTOMapper.INSTANCE.convertEntityToDuelGetDTO(duel));
         }
         return duelGetDTOs;
+
+    }
+
+    @GetMapping("/duels/{duelId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public DuelGetDTO getDuelById(@PathVariable(name = "duelId") long duelId){
+        Duel duel = duelService.getDuelById(duelId);
+        DuelGetDTO duelGetDTO = DTOMapper.INSTANCE.convertEntityToDuelGetDTO(duel);
+        return duelGetDTO;
 
     }
 
