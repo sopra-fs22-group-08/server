@@ -1,17 +1,23 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
-import lombok.Getter;
-import lombok.Setter;
-
-import javax.persistence.*;
-
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Internal User Representation
@@ -32,7 +38,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Deck> decks = new ArrayList<>();
 
-    //primary key
+    @OneToMany(mappedBy = "user")
+    private List<Invitation> invitations = new ArrayList<>();
+
+    // primary key
     @Getter
     @Setter
     @Id

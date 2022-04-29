@@ -1,9 +1,17 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
-import ch.uzh.ifi.hase.soprafs22.entity.User;
-import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
-import io.github.cdimascio.dotenv.Dotenv;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +20,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import com.sendgrid.*;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+
+import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
+import io.github.cdimascio.dotenv.Dotenv;
 
 /**
  * @brief User Service
@@ -149,6 +158,7 @@ public class UserService {
      * @throws org.springframework.web.server.ResponseStatusException
      * @see User
      */
+    // TODO: Change Status Code to 409 CONFLICT
     private void checkIfUserExists(User userToBeCreated) {
         User userByUsername = userRepository.findByUsername(userToBeCreated.getUsername());
         User userByFirstNameAndLastName = userRepository.findByFirstNameAndLastName(userToBeCreated.getFirstName(),

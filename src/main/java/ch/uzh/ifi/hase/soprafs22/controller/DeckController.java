@@ -3,7 +3,6 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckGetDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.mapper.DTOMapper;
 import ch.uzh.ifi.hase.soprafs22.service.DeckService;

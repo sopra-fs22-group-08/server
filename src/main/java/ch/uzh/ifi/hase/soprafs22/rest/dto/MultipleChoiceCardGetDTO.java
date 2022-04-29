@@ -1,9 +1,9 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 public class MultipleChoiceCardGetDTO {
     @Getter

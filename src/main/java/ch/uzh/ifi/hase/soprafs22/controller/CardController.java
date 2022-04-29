@@ -19,6 +19,7 @@ import ch.uzh.ifi.hase.soprafs22.service.MCCardService;
 
 @RestController
 public class CardController {
+
     private final MCCardService mccardService;
 
     public CardController(MCCardService mccardService) {

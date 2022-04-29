@@ -1,20 +1,22 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
-public class MultipleChoiceCardPostDTO {
-    @Getter
-    @Setter
-    private String question;
+/**
+ * DuelPostDTO
+ */
+public class DuelPostDTO {
 
     @Getter
     @Setter
-    private String answer;
+    private Long playerOneId;
 
     @Getter
     @Setter
-    private List<String> options;
+    private Long deckId;
+
+    @Getter
+    @Setter
+    private Long playerTwoId;
 }

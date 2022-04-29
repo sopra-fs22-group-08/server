@@ -6,18 +6,23 @@ import lombok.Setter;
 
 public class UserPutDTO {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String birthday;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String username;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String password;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private UserStatus status;
 }
