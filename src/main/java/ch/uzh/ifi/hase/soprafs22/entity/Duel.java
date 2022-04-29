@@ -18,32 +18,32 @@ public class Duel {
     @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Getter
     @Setter
     @Column(nullable = false)
-    private long deckId;
+    private Long deckId;
 
     @Getter
     @Setter
     @Column(nullable = false)
-    private long playerOneId;
+    private Long playerOneId;
 
     @Getter
     @Setter
     @Column(nullable = false)
-    private long playerTwoId;
+    private Long playerTwoId;
 
     @Getter
     @Setter
     @Column(nullable = false)
-    private long playerOneScore;
+    private Long playerOneScore;
 
     @Getter
     @Setter
     @Column(nullable = false)
-    private long playerTwoScore;
+    private Long playerTwoScore;
 
     @Setter
     @Getter
