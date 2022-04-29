@@ -1,20 +1,22 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
-import java.sql.Timestamp;
-
 import lombok.Getter;
 import lombok.Setter;
 
-public class DeckGetDTO {
-    @Getter
-    @Setter
-    private Long id;
+/**
+ * DuelPostDTO
+ */
+public class DuelPostDTO {
 
     @Getter
     @Setter
-    private String deckname;
+    private Long playerOneId;
 
     @Getter
     @Setter
-    private Timestamp creationdate;
+    private Long deckId;
+
+    @Getter
+    @Setter
+    private Long playerTwoId;
 }
