@@ -61,6 +61,8 @@ public class UserController {
         // create user
         User createdUser = userService.createUser(userInput);
 
+        userService.sendVerificationMail(createdUser.getEmail());
+
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
     }
@@ -120,18 +122,6 @@ public class UserController {
         User userInput = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
         User logoutUser = userService.setOffline(userInput);
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(logoutUser);
-    }
-
-    /**
-     * @brief sends verification email to user -> PutMapping
-     *        PUT MAPPING: HTTP.Status code = 200 OK
-     */
-    @PutMapping("/users/{userId}/verification")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public void sendVerification(@PathVariable("userId") long userId) {
-        User toVerify = userService.getUserbyID(userId);
-        userService.sendVerificationMail(toVerify.getEmail());
     }
 
 }
