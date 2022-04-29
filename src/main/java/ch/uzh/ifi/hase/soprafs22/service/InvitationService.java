@@ -1,19 +1,19 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
-import ch.uzh.ifi.hase.soprafs22.entity.Deck;
-import ch.uzh.ifi.hase.soprafs22.entity.Invitation;
-import ch.uzh.ifi.hase.soprafs22.repository.DuelRepository;
-import ch.uzh.ifi.hase.soprafs22.repository.InvitationRepository;
-import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
-import org.apache.catalina.Store;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
-import java.util.List;
+import ch.uzh.ifi.hase.soprafs22.entity.Invitation;
+import ch.uzh.ifi.hase.soprafs22.repository.DuelRepository;
+import ch.uzh.ifi.hase.soprafs22.repository.InvitationRepository;
+import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 
 @Service
 @Transactional
@@ -24,7 +24,8 @@ public class InvitationService {
 
     private final InvitationRepository invitationRepository;
 
-    public InvitationService(DuelRepository duelRepository, UserRepository userRepository, InvitationRepository invitationRepository) {
+    public InvitationService(DuelRepository duelRepository, UserRepository userRepository,
+            InvitationRepository invitationRepository) {
         this.userRepository = userRepository;
         this.invitationRepository = invitationRepository;
     }
@@ -45,18 +46,17 @@ public class InvitationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not find with this id: " + userId);
         }
         // fetch all decks of user in the internal representation
-        List<Invitation> invitationsToBeReturned= this.invitationRepository.findInvitationByUserId(userId);
+        List<Invitation> invitationsToBeReturned = this.invitationRepository.findInvitationByUserId(userId);
         return invitationsToBeReturned;
     }
 
     public void deleteInvitationById(long invitationId) {
         try {
             invitationRepository.deleteById(invitationId);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
-                    "Invitation with ID " + invitationId + " does NOT exist"
-            );
+                    "Invitation with ID " + invitationId + " does NOT exist");
         }
     }
 }

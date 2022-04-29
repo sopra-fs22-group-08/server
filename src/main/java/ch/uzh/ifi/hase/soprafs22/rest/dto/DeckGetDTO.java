@@ -1,11 +1,9 @@
 package ch.uzh.ifi.hase.soprafs22.rest.dto;
 
+import java.sql.Timestamp;
+
 import lombok.Getter;
 import lombok.Setter;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.sql.Timestamp;
 
 public class DeckGetDTO {
     @Getter

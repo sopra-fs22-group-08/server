@@ -3,8 +3,6 @@ package ch.uzh.ifi.hase.soprafs22.rest.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-
 public class InvitationGetDTO {
     @Getter
     @Setter

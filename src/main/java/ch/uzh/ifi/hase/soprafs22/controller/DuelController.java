@@ -40,18 +40,18 @@ public class DuelController {
 
     @DeleteMapping("/duels/{duelId}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteInvitation(@PathVariable(value = "duelId") long duelId){
+    public void deleteInvitation(@PathVariable(value = "duelId") long duelId) {
         duelService.deleteDuelById(duelId);
     }
 
     @GetMapping("/duels")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<DuelGetDTO> getAllDuels(){
+    public List<DuelGetDTO> getAllDuels() {
         List<Duel> duels = duelService.getDuels();
         List<DuelGetDTO> duelGetDTOs = new ArrayList<>();
 
-        for(Duel duel : duels){
+        for (Duel duel : duels) {
             duelGetDTOs.add(DTOMapper.INSTANCE.convertEntityToDuelGetDTO(duel));
         }
         return duelGetDTOs;
@@ -61,29 +61,29 @@ public class DuelController {
     @GetMapping("/duels/{duelId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public DuelGetDTO getDuelById(@PathVariable(name = "duelId") long duelId){
+    public DuelGetDTO getDuelById(@PathVariable(name = "duelId") long duelId) {
         Duel duel = duelService.getDuelById(duelId);
         DuelGetDTO duelGetDTO = DTOMapper.INSTANCE.convertEntityToDuelGetDTO(duel);
         return duelGetDTO;
 
     }
-    //TODO: Duel should be deleted when both players are finished
+
+    // TODO: Duel should be deleted when both players are finished
     @PutMapping("/duels/{duelId}/players/{playerId}/status/{playerStatus}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateDuelStatus(@PathVariable (name = "duelId") long duelId,
-                                         @PathVariable(name = "playerId") long playerId,
-                                         @PathVariable(name = "playerStatus") PlayerStatus playerStatus){
+    public void updateDuelStatus(@PathVariable(name = "duelId") long duelId,
+            @PathVariable(name = "playerId") long playerId,
+            @PathVariable(name = "playerStatus") PlayerStatus playerStatus) {
         duelService.updatePlayerStatus(duelId, playerId, playerStatus);
     }
 
     @PutMapping("/duels/{duelId}/players/{playerId}/score/{newScore}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateDuelScore(@PathVariable (name = "duelId") long duelId,
-                                @PathVariable(name = "playerId") long playerId,
-                                @PathVariable(name = "newScore") long newScore){
+    public void updateDuelScore(@PathVariable(name = "duelId") long duelId,
+            @PathVariable(name = "playerId") long playerId,
+            @PathVariable(name = "newScore") long newScore) {
         duelService.updatePlayerScore(duelId, playerId, newScore);
 
     }
-
 
 }

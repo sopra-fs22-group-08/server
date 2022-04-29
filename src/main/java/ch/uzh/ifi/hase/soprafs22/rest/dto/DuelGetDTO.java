@@ -4,8 +4,6 @@ import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-
 /**
  * DuelGetDTO
  */

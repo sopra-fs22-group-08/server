@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import ch.uzh.ifi.hase.soprafs22.constant.PlayerStatus;
-import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import lombok.Getter;
 import lombok.Setter;
 
