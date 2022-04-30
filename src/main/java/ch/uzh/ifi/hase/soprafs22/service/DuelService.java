@@ -38,8 +38,8 @@ public class DuelService {
     }
 
     public Duel createDuel(Duel givenDuel) {
-        givenDuel.setPlayerOneScore(0);
-        givenDuel.setPlayerTwoScore(0);
+        givenDuel.setPlayerOneScore(0l);
+        givenDuel.setPlayerTwoScore(0l);
         givenDuel.setPlayerOneStatus(PlayerStatus.ACCEPTED);
         givenDuel.setPlayerTwoStatus(PlayerStatus.PENDING);
         duelRepository.save(givenDuel);

@@ -5,8 +5,6 @@ import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPutDTO;
 import ch.uzh.ifi.hase.soprafs22.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ch.uzh.ifi.hase.soprafs22.helpers.Utilities.asJsonString;
 
 /**
  * UserControllerTest
@@ -61,7 +60,8 @@ public class UserControllerTest {
         given(userService.getUsers()).willReturn(allUsers);
 
         // when
-        MockHttpServletRequestBuilder getRequest = get("/users").contentType(MediaType.APPLICATION_JSON);
+        MockHttpServletRequestBuilder getRequest = get("/users")
+                .contentType(MediaType.APPLICATION_JSON);
 
         // then
         mockMvc.perform(getRequest).andExpect(status().isOk())
@@ -96,8 +96,10 @@ public class UserControllerTest {
      */
     @Test
     public void getUserOne_notFound() throws Exception {
-        MockHttpServletRequestBuilder getRequest = get("/users/1").contentType(MediaType.APPLICATION_JSON);
-        given(userService.getUserbyID(1)).willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
+        MockHttpServletRequestBuilder getRequest = get("/users/1")
+                .contentType(MediaType.APPLICATION_JSON);
+        given(userService.getUserbyID(1))
+                .willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
         mockMvc.perform(getRequest).andExpect(status().isNotFound());
     }
 
@@ -199,45 +201,5 @@ public class UserControllerTest {
 
         mockMvc.perform(putRequest)
                 .andExpect(status().isNoContent());
-    }
-
-    /*
-     * @brief test PUT with invalid User
-     */
-    @Test
-    public void updateUser_invalidInput_notFound() throws Exception {
-
-        UserPutDTO userPutDTO = new UserPutDTO();
-        userPutDTO.setUsername("updatedUser");
-        userPutDTO.setBirthday("1999-01-01");
-
-        MockHttpServletRequestBuilder putRequest = put("/users/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(userPutDTO));
-
-        given(userService.updateUser(Mockito.any(), Mockito.any()))
-                .willThrow(new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        mockMvc.perform(putRequest)
-                .andExpect(status().isNotFound());
-    }
-
-    /**
-     * @brief Helper Method to convert userPostDTO into a JSON string such that the
-     *        input
-     *        can be processed
-     *        Input will look like this: {"name": "Test User", "username":
-     *        "testUsername"}
-     *
-     * @param object
-     * @return string
-     */
-    private String asJsonString(final Object object) {
-        try {
-            return new ObjectMapper().writeValueAsString(object);
-        } catch (JsonProcessingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    String.format("The request body could not be created.%s", e.toString()));
-        }
     }
 }

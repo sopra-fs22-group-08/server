@@ -1,7 +1,6 @@
 package ch.uzh.ifi.hase.soprafs22.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -51,5 +50,5 @@ public class MultipleChoiceCard implements Serializable {
     @Getter
     @Setter
     @ElementCollection
-    private List<String> options = new ArrayList<>();
+    private List<String> options;
 }

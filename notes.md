@@ -1,4 +1,5 @@
-Multiplayer:
+### Multiplayer
+
 - MC cards are definitive
 - how to play 1v1 is open
   - only challenge online users
@@ -8,3 +9,12 @@ Multiplayer:
     - each player gets x seconds to answer:
       - correct answer gets multiplied with time factor (remaining factor)
       - live or async
+
+### Testing
+
+Unit Tests
+- controller
+- (service classes)
+
+Integration Test
+- (service class)
