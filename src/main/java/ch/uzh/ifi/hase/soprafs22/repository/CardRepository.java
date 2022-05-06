@@ -11,5 +11,4 @@ import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
 public interface CardRepository extends JpaRepository<MultipleChoiceCard, Long> {
     List<MultipleChoiceCard> findCardByDeckId(Long deckId);
 
-    MultipleChoiceCard findCardById(Long cardId);
 }

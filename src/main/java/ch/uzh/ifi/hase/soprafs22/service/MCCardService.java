@@ -40,45 +40,6 @@ public class MCCardService {
         return card;
     }
 
-    public MultipleChoiceCard updateCard(Long cardId, MultipleChoiceCard cardRequest) {
-        String baseErrorMessage = "You cannot update with empty";
-        // get card out of the card repository
-        MultipleChoiceCard currentCard = cardRepository.findCardById(cardId);
-
-        // allow updating to same content but not empty ones
-        if (cardRequest.getAnswer() != null) {
-            currentCard.setAnswer(cardRequest.getAnswer());
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, baseErrorMessage + "answer!");
-        }
-        if (cardRequest.getQuestion() != null) {
-            currentCard.setQuestion(cardRequest.getQuestion());
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, baseErrorMessage + "question!");
-        }
-        if (cardRequest.getOptions() != null) {
-            currentCard.setOptions(cardRequest.getOptions());
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, baseErrorMessage + "options!");
-        }
-        cardRepository.save(currentCard);
-        cardRepository.flush();
-
-        return currentCard;
-    }
-
-    public MultipleChoiceCard deleteCard(Long cardId) {
-        try {
-            MultipleChoiceCard currentCard = cardRepository.findCardById(cardId);
-            cardRepository.deleteById(cardId);
-            return currentCard;
-        } catch (Exception e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Card with ID " + cardId + " does NOT exist");
-        }
-    }
-
     public List<MultipleChoiceCard> getCardsByDeckId(Long deckId) {
         // check for existence of deck
         if (!deckRepository.existsById(deckId)) {
