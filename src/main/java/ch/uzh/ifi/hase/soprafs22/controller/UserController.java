@@ -61,7 +61,8 @@ public class UserController {
         // create user
         User createdUser = userService.createUser(userInput);
 
-        // userService.sendVerificationMail(createdUser.getEmail());
+        // send verification Mail to user
+        userService.sendVerificationMail(createdUser.getEmail());
 
         // convert internal representation of user back to API
         return DTOMapper.INSTANCE.convertEntityToUserGetDTO(createdUser);
