@@ -17,6 +17,7 @@ import ch.uzh.ifi.hase.soprafs22.rest.dto.InvitationGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.InvitationPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.MultipleChoiceCardGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.MultipleChoiceCardPostDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.MultipleChoiceCardPutDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPutDTO;
@@ -40,6 +41,7 @@ public interface DTOMapper {
 
     DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
+    // USER Mappers
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "username", target = "username")
@@ -65,13 +67,25 @@ public interface DTOMapper {
     @Mapping(source = "status", target = "status")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
+    // DECK Mappers
     @Mapping(source = "deckname", target = "deckname")
     Deck convertDeckPostDTOtoEntity(DeckPostDTO deckPostDTO);
 
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "deckname", target = "deckname")
+    @Mapping(source = "creationdate", target = "creationdate")
+    DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
+
+    // MULTIPLE CHOICE CARD Mappers
     @Mapping(source = "question", target = "question")
     @Mapping(source = "answer", target = "answer")
     @Mapping(source = "options", target = "options")
     MultipleChoiceCard convertMultipleChoiceCardPostDTOtoEntity(MultipleChoiceCardPostDTO multipleChoiceCardPostDTO);
+
+    @Mapping(source = "question", target = "question")
+    @Mapping(source = "answer", target = "answer")
+    @Mapping(source = "options", target = "options")
+    MultipleChoiceCard convertMultipleChoiceCardPutDTOtoEntity(MultipleChoiceCardPutDTO multipleChoiceCardPutDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "question", target = "question")
@@ -79,11 +93,7 @@ public interface DTOMapper {
     @Mapping(source = "options", target = "options")
     MultipleChoiceCardGetDTO convertEntityToMultipleChoiceCardGetDTO(MultipleChoiceCard multipleChoiceCard);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "deckname", target = "deckname")
-    @Mapping(source = "creationdate", target = "creationdate")
-    DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
-
+    // DUEL Mappers
     @Mapping(source = "deckId", target = "deckId")
     @Mapping(source = "playerOneId", target = "playerOneId")
     @Mapping(source = "playerTwoId", target = "playerTwoId")
@@ -99,6 +109,7 @@ public interface DTOMapper {
     @Mapping(source = "playerTwoStatus", target = "playerTwoStatus")
     DuelGetDTO convertEntityToDuelGetDTO(Duel duel);
 
+    // INVITATION Mappers
     @Mapping(source = "receiverId", target = "receiverId")
     @Mapping(source = "senderId", target = "senderId")
     @Mapping(source = "duelId", target = "duelId")
