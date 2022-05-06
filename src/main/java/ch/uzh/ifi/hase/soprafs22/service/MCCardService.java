@@ -40,7 +40,7 @@ public class MCCardService {
         return card;
     }
 
-    public MultipleChoiceCard updateMCCard(Long cardId, MultipleChoiceCard cardRequest) {
+    public MultipleChoiceCard updateCard(Long cardId, MultipleChoiceCard cardRequest) {
         String baseErrorMessage = "You cannot update with empty";
         // get card out of the card repository
         MultipleChoiceCard currentCard = cardRepository.findCardById(cardId);
@@ -65,6 +65,18 @@ public class MCCardService {
         cardRepository.flush();
 
         return currentCard;
+    }
+
+    public MultipleChoiceCard deleteCard(Long cardId) {
+        try {
+            MultipleChoiceCard currentCard = cardRepository.findCardById(cardId);
+            cardRepository.deleteById(cardId);
+            return currentCard;
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Card with ID " + cardId + " does NOT exist");
+        }
     }
 
     public List<MultipleChoiceCard> getCardsByDeckId(Long deckId) {

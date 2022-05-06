@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,11 +55,18 @@ public class CardController {
     // @PutMapping("/decks/{deckId}/cards/{cardId}")
     @PutMapping("/cards/{cardId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public MultipleChoiceCard updateCard(@PathVariable("cardId") Long cardId,
+    public MultipleChoiceCard updateMCCard(@PathVariable("cardId") Long cardId,
             @RequestBody MultipleChoiceCardPutDTO cardPutDTO) {
         MultipleChoiceCard cardRequest = DTOMapper.INSTANCE.convertMultipleChoiceCardPutDTOtoEntity(cardPutDTO);
-        MultipleChoiceCard returnCard = mccardService.updateMCCard(cardId, cardRequest);
+        MultipleChoiceCard returnCard = mccardService.updateCard(cardId, cardRequest);
         return returnCard;
+    }
+
+    // NOTE:same question here regarding the mapping
+    @DeleteMapping("/cards/{cardId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteCard(@PathVariable("cardId") Long cardId) {
+        mccardService.deleteCard(cardId);
     }
 
     @GetMapping("/decks/{deckId}/cards")
