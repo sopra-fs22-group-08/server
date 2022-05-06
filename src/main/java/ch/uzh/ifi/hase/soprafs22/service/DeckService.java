@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import ch.uzh.ifi.hase.soprafs22.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class DeckService {
         return deckToBeReturned;
     }
 
-    public Deck getDecksById(long id) {
+    public Deck getDeckById(long id) {
         Deck deckToBeReturned = deckRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No deck was found with ID: " + id));
         return deckToBeReturned;
@@ -54,5 +55,30 @@ public class DeckService {
 
     public List<Deck> getDecks() {
         return this.deckRepository.findAll();
+    }
+
+    /**
+     * @brief updates the Deck with the new Deckname
+     */
+    public Deck updateDeck(Deck currentDeck, Deck deckInput) {
+        String trimmedDeckname = deckInput.getDeckname().trim();
+        if (deckInput.getDeckname() == null || trimmedDeckname.length()== 0) {
+            String baseErrorMessage = "You cannot choose an empty Deckname!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        currentDeck.setDeckname(trimmedDeckname);
+        deckRepository.save(currentDeck);
+        deckRepository.flush();
+        return currentDeck;
+    }
+
+    public void deleteDeckById(long deckId) {
+        try {
+            deckRepository.deleteById(deckId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Duel with ID " + deckId + " does NOT exist");
+        }
     }
 }
