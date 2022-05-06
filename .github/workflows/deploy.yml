@@ -16,6 +16,7 @@ jobs:
       HEROKU_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
       HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+      EMAIL_TOKEN: ${{ secrets.EMAIL_TOKEN }}
 
     steps:
     - name: checkout repository code
@@ -46,6 +47,9 @@ jobs:
 
     - name: add heroku as git remote
       run: heroku git:remote --app=$HEROKU_APP_NAME --remote=heroku
+
+    - name: add email verification token
+      run: heroku config:set EMAIL_TOKEN=${{ secrets.EMAIL_TOKEN }}
 
     - name: deploy project to heroku
       run: git push heroku HEAD:refs/heads/master
