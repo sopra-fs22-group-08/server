@@ -3,14 +3,12 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPutDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPutDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckGetDTO;
@@ -51,7 +49,7 @@ public class DeckController {
     @ResponseStatus(HttpStatus.OK)
     public Deck getDecksById(@PathVariable("id") long id) {
         // get deck by id from repository
-        Deck deckToBeReturned = deckService.getDecksById(id);
+        Deck deckToBeReturned = deckService.getDeckById(id);
         return deckToBeReturned;
     }
 
@@ -85,6 +83,26 @@ public class DeckController {
         Deck deckRequest = DTOMapper.INSTANCE.convertDeckPostDTOtoEntity(deckPostDTO);
         Deck deck = deckService.createDeck(userId, deckRequest);
         return deck;
+    }
+
+    /**
+     * @brief updates the User -> PutMapping
+     *        PUT REQUEST: Status Code 204 -> NO_CONTENT, Error: Status Code = 404
+     *        -> NOT FOUND
+     */
+    @PutMapping("/users/{userId}/decks/{deckId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void updateDeck(@PathVariable("deckId") long deckId, @RequestBody DeckPutDTO deckPutDTO) {
+        Deck currentDeck = deckService.getDeckById(deckId);
+        Deck inputUser = DTOMapper.INSTANCE.convertDeckPutDTOtoEntity(deckPutDTO);
+        deckService.updateDeck(currentDeck, inputUser);
+    }
+
+    @DeleteMapping("/users/{userId}/decks/{deckId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDeck(@PathVariable(name="deckId") long deckId){
+        deckService.deleteDeckById(deckId);
     }
 
 }
