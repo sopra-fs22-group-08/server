@@ -48,11 +48,6 @@ public class CardController {
         return mcCreatedCard;
     }
 
-    // TODO: decide, whether we propagate to deck:
-    // currently we are storing each card with a unique ID, so it makes sense
-    // to access updates with /cards/{cardiD}
-    // Decide, whether we use the commented out mapping or not.
-    // @PutMapping("/decks/{deckId}/cards/{cardId}")
     @PutMapping("/cards/{cardId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public MultipleChoiceCard updateMCCard(@PathVariable("cardId") Long cardId,
@@ -62,7 +57,6 @@ public class CardController {
         return returnCard;
     }
 
-    // NOTE:same question here regarding the mapping
     @DeleteMapping("/cards/{cardId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteCard(@PathVariable("cardId") Long cardId) {
