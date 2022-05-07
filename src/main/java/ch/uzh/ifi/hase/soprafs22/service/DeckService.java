@@ -67,14 +67,10 @@ public class DeckService {
             String baseErrorMessage = "You cannot choose an empty Deckname!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
-        // Check for visibility cases
-        switch (currentDeck.getVisibility()){
-            case PUBLIC:
-                currentDeck.setVisibility(deckInput.getVisibility());
-            case PRIVATE:
-                currentDeck.setVisibility(deckInput.getVisibility());
-        }
+        //set changes
+        currentDeck.setVisibility(deckInput.getVisibility());
         currentDeck.setDeckname(trimmedDeckname);
+        //save changes
         deckRepository.save(currentDeck);
         deckRepository.flush();
         return currentDeck;
