@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -55,5 +56,10 @@ public class Deck implements Serializable {
     @Setter
     @CreationTimestamp
     private Timestamp creationdate;
+
+    @Getter
+    @Setter
+    @Column(nullable = false)
+    private Visibility visibility ;
 
 }
