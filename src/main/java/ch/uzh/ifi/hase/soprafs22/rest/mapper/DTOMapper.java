@@ -58,12 +58,18 @@ public interface DTOMapper {
 
     // DECK Mappers
     @Mapping(source = "deckname", target = "deckname")
+    @Mapping(source = "visibility", target = "visibility")
     Deck convertDeckPostDTOtoEntity(DeckPostDTO deckPostDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "deckname", target = "deckname")
     @Mapping(source = "creationdate", target = "creationdate")
+    @Mapping(source = "visibility", target = "visibility")
     DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
+
+    @Mapping(source ="deckname", target="deckname")
+    @Mapping(source = "visibility", target = "visibility")
+    Deck convertDeckPutDTOtoEntity(DeckPutDTO deckPutDTO);
 
     // MULTIPLE CHOICE CARD Mappers
     @Mapping(source = "question", target = "question")
@@ -117,7 +123,4 @@ public interface DTOMapper {
     @Mapping(source = "senderUsername", target = "senderUsername")
     @Mapping(source = "receiverUsername", target = "receiverUsername")
     InvitationGetDTO convertEntityToInvitationGetDTO(Invitation invitation);
-
-    @Mapping(source ="deckname", target="deckname")
-    Deck convertDeckPutDTOtoEntity(DeckPutDTO deckPutDTO);
 }

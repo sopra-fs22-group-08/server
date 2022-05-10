@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -58,15 +58,19 @@ public class DeckService {
     }
 
     /**
-     * @brief updates the Deck with the new Deckname
+     * @brief updates the Deck with the new Deckname and new Visibility
      */
     public Deck updateDeck(Deck currentDeck, Deck deckInput) {
         String trimmedDeckname = deckInput.getDeckname().trim();
+        //check if deckname is empty or only whitespaces
         if (deckInput.getDeckname() == null || trimmedDeckname.length()== 0) {
             String baseErrorMessage = "You cannot choose an empty Deckname!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
+        //set changes
+        currentDeck.setVisibility(deckInput.getVisibility());
         currentDeck.setDeckname(trimmedDeckname);
+        //save changes
         deckRepository.save(currentDeck);
         deckRepository.flush();
         return currentDeck;
@@ -80,5 +84,10 @@ public class DeckService {
                     HttpStatus.NOT_FOUND,
                     "Duel with ID " + deckId + " does NOT exist");
         }
+    }
+
+    public List<Deck> getDecksByVisibility(Visibility visibility) {
+        List<Deck> publicDecksToBeReturned = this.deckRepository.findDeckByVisibility(visibility);
+        return publicDecksToBeReturned;
     }
 }
