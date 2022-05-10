@@ -105,7 +105,7 @@ public class DeckController {
      *        PUT REQUEST: Status Code 204 -> NO_CONTENT, Error: Status Code = 404
      *        -> NOT FOUND
      */
-    @PutMapping("/users/{userId}/decks/{deckId}")
+    @PutMapping("/decks/{deckId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ResponseBody
     public void updateDeck(@PathVariable("deckId") long deckId, @RequestBody DeckPutDTO deckPutDTO) {
@@ -114,7 +114,7 @@ public class DeckController {
         deckService.updateDeck(currentDeck, inputUser);
     }
 
-    @DeleteMapping("/users/{userId}/decks/{deckId}")
+    @DeleteMapping("/decks/{deckId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDeck(@PathVariable(name="deckId") long deckId){
         deckService.deleteDeckById(deckId);
