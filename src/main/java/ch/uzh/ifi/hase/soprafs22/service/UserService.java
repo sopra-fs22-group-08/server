@@ -25,6 +25,7 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 
 /**
  * @brief User Service
@@ -192,17 +193,28 @@ public class UserService {
         Content content = new Content("text/plain", " - The last learning app you'll ever need!");
         Mail mail = new Mail(from, subject, to, content);
 
-        Dotenv dotenv = Dotenv.load();
-        SendGrid sg = new SendGrid(dotenv.get("EMAIL_TOKEN"));
+        String emailToken;
+        try {
+            // if there is an env file, it can be loaded
+            Dotenv dotenv = Dotenv.load();
+            emailToken = dotenv.get("EMAIL_TOKEN");
+        } catch (DotenvException e) {
+            // this is where we are with no .env file
+            emailToken = System.getenv("EMAIL_TOKEN");
+        }
+        SendGrid sg = new SendGrid(emailToken);
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
+            // System.out.println(response.getStatusCode());
+            // System.out.println(response.getBody());
+            // System.out.println(response.getHeaders());
         } catch (IOException ex) {
-            System.out.println("Error while sending mail!");
             String baseErrorMessage = "An error while sending the mail occurred";
+            log.error(baseErrorMessage);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
         }
         System.out.println("Mail sent successfully to: " + toAddress.toString());

@@ -3,9 +3,8 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPutDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPutDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -55,14 +54,30 @@ public class DeckController {
 
     /**
      * @brief retrieves all Decks based on given ID of User
-     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
-     *        Found
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not Found
      */
     @GetMapping("/users/{userId}/decks")
     @ResponseStatus(HttpStatus.OK)
     public List<DeckGetDTO> getDecksByUserId(@PathVariable("userId") long userId) {
         // fetch all cards of deck in the internal representation
         List<Deck> decksToBeReturned = deckService.getDecksByUserId(userId);
+        List<DeckGetDTO> deckGetDTOS = new ArrayList<>();
+        // convert internal representation deck to API deck
+        for (Deck deck : decksToBeReturned) {
+            deckGetDTOS.add(DTOMapper.INSTANCE.convertEntityToDeckGetDTO(deck));
+        }
+        return deckGetDTOS;
+    }
+
+    /**
+     * @brief retrieves all Decks based on given ID of User
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not Found
+     */
+    @GetMapping("/decks/visibility/{visibility}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DeckGetDTO> getDecksByVisibility(@PathVariable(name = "visibility") Visibility visibility) {
+        // fetch all cards of deck in the internal representation
+        List<Deck> decksToBeReturned = deckService.getDecksByVisibility(visibility);
         List<DeckGetDTO> deckGetDTOS = new ArrayList<>();
         // convert internal representation deck to API deck
         for (Deck deck : decksToBeReturned) {

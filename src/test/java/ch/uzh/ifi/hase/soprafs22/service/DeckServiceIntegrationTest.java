@@ -3,6 +3,7 @@ package ch.uzh.ifi.hase.soprafs22.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,6 +70,7 @@ public class DeckServiceIntegrationTest {
         deckRequest.setId(1L);
         deckRequest.setUser(testUser);
         deckRequest.setDeckname("testdeck");
+        deckRequest.setVisibility(Visibility.PUBLIC);
 
         Deck createdDeck = deckService.createDeck(testUser.getId(), deckRequest);
 
@@ -76,5 +78,6 @@ public class DeckServiceIntegrationTest {
         assertEquals(deckRequest.getId(), createdDeck.getId(), "Deck ID" + baseMsg);
         assertEquals(deckRequest.getUser(), createdDeck.getUser(), "Saved User" + baseMsg);
         assertEquals(deckRequest.getDeckname(), createdDeck.getDeckname(), "Deckname" + baseMsg);
+        assertEquals(deckRequest.getVisibility(), createdDeck.getVisibility(), "Visibility" + baseMsg);
     }
 }
