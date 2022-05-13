@@ -16,11 +16,15 @@ public class UserPutDTO {
 
     @Getter
     @Setter
-    private String username;
+    private String firstName;
 
     @Getter
     @Setter
-    private String password;
+    private String lastName;
+
+    @Getter
+    @Setter
+    private String username;
 
     @Getter
     @Setter

@@ -72,6 +72,12 @@ public class UserService {
      *        added
      */
     public User updateUser(User currentUser, User userInput) {
+        if (userInput.getFirstName() == null || userInput.getLastName() == null || userInput.getUsername() == null) {
+            String baseErrorMessage = "You cannot choose an empty input for any fields!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        String trimmedFirstName = userInput.getFirstName().trim();
+        String trimmedLastName = userInput.getLastName().trim();
         if (userInput.getUsername() == null) {
             String baseErrorMessage = "You cannot choose an empty Username!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
@@ -85,9 +91,20 @@ public class UserService {
                 currentUser.setUsername(userInput.getUsername());
             }
         }
+        if (trimmedFirstName.length() == 0) {
+            String baseErrorMessage = "You cannot choose an empty firstname!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        if (trimmedLastName.length() == 0) {
+            String baseErrorMessage = "You cannot choose an empty lastname!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        currentUser.setFirstName(trimmedFirstName);
+        currentUser.setLastName(trimmedLastName);
         if (userInput.getBirthday() != null) {
             currentUser.setBirthday(userInput.getBirthday());
         }
+        // save updated information to repository
         userRepository.save(currentUser);
         userRepository.flush();
         return currentUser;
