@@ -28,9 +28,5 @@ public class UserPutDTO {
 
     @Getter
     @Setter
-    private String password;
-
-    @Getter
-    @Setter
     private UserStatus status;
 }
