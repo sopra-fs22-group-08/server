@@ -88,10 +88,17 @@ public class DeckService {
 
     public List<Deck> getDecksByVisibility(Visibility visibility) {
         List<Deck> publicDecksToBeReturned = this.deckRepository.findDeckByVisibility(visibility);
+        if (publicDecksToBeReturned.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck with that visibility not found!");
+        }
         return publicDecksToBeReturned;
     }
 
     public List<Deck> getDecksByFuzzyFind(String deckname) {
-        return deckRepository.findDeckByDecknameContainingIgnoreCase(deckname);
+        List<Deck> decksReturned = deckRepository.findDeckByDecknameContainingIgnoreCase(deckname);
+        if (decksReturned.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck with that search string not found!");
+        }
+        return decksReturned;
     }
 }
