@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
+import ch.uzh.ifi.hase.soprafs22.rest.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -9,17 +10,6 @@ import ch.uzh.ifi.hase.soprafs22.entity.Duel;
 import ch.uzh.ifi.hase.soprafs22.entity.Invitation;
 import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DuelGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.DuelPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.InvitationGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.InvitationPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.MultipleChoiceCardGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.MultipleChoiceCardPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
-import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPutDTO;
 
 /**
  * @brief DTOMapper
@@ -40,6 +30,7 @@ public interface DTOMapper {
 
     DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
 
+    // USER Mappers
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "username", target = "username")
@@ -61,17 +52,37 @@ public interface DTOMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "birthday", target = "birthday")
+    @Mapping(source = "firstName", target = "firstName")
+    @Mapping(source = "lastName", target = "lastName")
     @Mapping(source = "username", target = "username")
     @Mapping(source = "status", target = "status")
     User convertUserPutDTOtoEntity(UserPutDTO userPutDTO);
 
+    // DECK Mappers
     @Mapping(source = "deckname", target = "deckname")
+    @Mapping(source = "visibility", target = "visibility")
     Deck convertDeckPostDTOtoEntity(DeckPostDTO deckPostDTO);
 
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "deckname", target = "deckname")
+    @Mapping(source = "creationdate", target = "creationdate")
+    @Mapping(source = "visibility", target = "visibility")
+    DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
+
+    @Mapping(source ="deckname", target="deckname")
+    @Mapping(source = "visibility", target = "visibility")
+    Deck convertDeckPutDTOtoEntity(DeckPutDTO deckPutDTO);
+
+    // MULTIPLE CHOICE CARD Mappers
     @Mapping(source = "question", target = "question")
     @Mapping(source = "answer", target = "answer")
     @Mapping(source = "options", target = "options")
     MultipleChoiceCard convertMultipleChoiceCardPostDTOtoEntity(MultipleChoiceCardPostDTO multipleChoiceCardPostDTO);
+
+    @Mapping(source = "question", target = "question")
+    @Mapping(source = "answer", target = "answer")
+    @Mapping(source = "options", target = "options")
+    MultipleChoiceCard convertMultipleChoiceCardPutDTOtoEntity(MultipleChoiceCardPutDTO multipleChoiceCardPutDTO);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "question", target = "question")
@@ -79,11 +90,7 @@ public interface DTOMapper {
     @Mapping(source = "options", target = "options")
     MultipleChoiceCardGetDTO convertEntityToMultipleChoiceCardGetDTO(MultipleChoiceCard multipleChoiceCard);
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "deckname", target = "deckname")
-    @Mapping(source = "creationdate", target = "creationdate")
-    DeckGetDTO convertEntityToDeckGetDTO(Deck deck);
-
+    // DUEL Mappers
     @Mapping(source = "deckId", target = "deckId")
     @Mapping(source = "playerOneId", target = "playerOneId")
     @Mapping(source = "playerTwoId", target = "playerTwoId")
@@ -99,6 +106,7 @@ public interface DTOMapper {
     @Mapping(source = "playerTwoStatus", target = "playerTwoStatus")
     DuelGetDTO convertEntityToDuelGetDTO(Duel duel);
 
+    // INVITATION Mappers
     @Mapping(source = "receiverId", target = "receiverId")
     @Mapping(source = "senderId", target = "senderId")
     @Mapping(source = "duelId", target = "duelId")

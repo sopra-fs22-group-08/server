@@ -46,7 +46,10 @@ jobs:
       run: heroku login
 
     - name: add heroku as git remote
-      run: heroku git:remote -a $HEROKU_APP_NAME
+      run: heroku git:remote --app=$HEROKU_APP_NAME --remote=heroku
+
+    - name: add email verification token
+      run: heroku config:set EMAIL_TOKEN=${{ secrets.EMAIL_TOKEN }}
 
     - name: deploy project to heroku
       run: git push heroku HEAD:refs/heads/master

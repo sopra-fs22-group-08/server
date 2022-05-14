@@ -78,9 +78,9 @@ TODO:
 
 ## Roadmap
 
-TODO:
-
--   [ ] add roadmap
+-   [ ] add feature to add and challenge friends
+-   [ ] add feature for open question cards
+-   [ ] ...
 
 ## Authors & Acknowledgements
 

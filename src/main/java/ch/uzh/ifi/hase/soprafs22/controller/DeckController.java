@@ -3,14 +3,11 @@ package ch.uzh.ifi.hase.soprafs22.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPutDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckGetDTO;
@@ -51,20 +48,36 @@ public class DeckController {
     @ResponseStatus(HttpStatus.OK)
     public Deck getDecksById(@PathVariable("id") long id) {
         // get deck by id from repository
-        Deck deckToBeReturned = deckService.getDecksById(id);
+        Deck deckToBeReturned = deckService.getDeckById(id);
         return deckToBeReturned;
     }
 
     /**
      * @brief retrieves all Decks based on given ID of User
-     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
-     *        Found
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not Found
      */
     @GetMapping("/users/{userId}/decks")
     @ResponseStatus(HttpStatus.OK)
     public List<DeckGetDTO> getDecksByUserId(@PathVariable("userId") long userId) {
         // fetch all cards of deck in the internal representation
         List<Deck> decksToBeReturned = deckService.getDecksByUserId(userId);
+        List<DeckGetDTO> deckGetDTOS = new ArrayList<>();
+        // convert internal representation deck to API deck
+        for (Deck deck : decksToBeReturned) {
+            deckGetDTOS.add(DTOMapper.INSTANCE.convertEntityToDeckGetDTO(deck));
+        }
+        return deckGetDTOS;
+    }
+
+    /**
+     * @brief retrieves all Decks based on given ID of User
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not Found
+     */
+    @GetMapping("/decks/visibility/{visibility}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DeckGetDTO> getDecksByVisibility(@PathVariable(name = "visibility") Visibility visibility) {
+        // fetch all cards of deck in the internal representation
+        List<Deck> decksToBeReturned = deckService.getDecksByVisibility(visibility);
         List<DeckGetDTO> deckGetDTOS = new ArrayList<>();
         // convert internal representation deck to API deck
         for (Deck deck : decksToBeReturned) {
@@ -85,6 +98,26 @@ public class DeckController {
         Deck deckRequest = DTOMapper.INSTANCE.convertDeckPostDTOtoEntity(deckPostDTO);
         Deck deck = deckService.createDeck(userId, deckRequest);
         return deck;
+    }
+
+    /**
+     * @brief updates the User -> PutMapping
+     *        PUT REQUEST: Status Code 204 -> NO_CONTENT, Error: Status Code = 404
+     *        -> NOT FOUND
+     */
+    @PutMapping("/decks/{deckId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public void updateDeck(@PathVariable("deckId") long deckId, @RequestBody DeckPutDTO deckPutDTO) {
+        Deck currentDeck = deckService.getDeckById(deckId);
+        Deck inputUser = DTOMapper.INSTANCE.convertDeckPutDTOtoEntity(deckPutDTO);
+        deckService.updateDeck(currentDeck, inputUser);
+    }
+
+    @DeleteMapping("/decks/{deckId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDeck(@PathVariable(name="deckId") long deckId){
+        deckService.deleteDeckById(deckId);
     }
 
 }

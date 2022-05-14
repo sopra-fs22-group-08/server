@@ -25,6 +25,7 @@ import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 
 /**
  * @brief User Service
@@ -71,6 +72,12 @@ public class UserService {
      *        added
      */
     public User updateUser(User currentUser, User userInput) {
+        if (userInput.getFirstName() == null || userInput.getLastName() == null || userInput.getUsername() == null) {
+            String baseErrorMessage = "You cannot choose an empty input for any fields!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        String trimmedFirstName = userInput.getFirstName().trim();
+        String trimmedLastName = userInput.getLastName().trim();
         if (userInput.getUsername() == null) {
             String baseErrorMessage = "You cannot choose an empty Username!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
@@ -84,9 +91,20 @@ public class UserService {
                 currentUser.setUsername(userInput.getUsername());
             }
         }
+        if (trimmedFirstName.length() == 0) {
+            String baseErrorMessage = "You cannot choose an empty firstname!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        if (trimmedLastName.length() == 0) {
+            String baseErrorMessage = "You cannot choose an empty lastname!";
+            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        }
+        currentUser.setFirstName(trimmedFirstName);
+        currentUser.setLastName(trimmedLastName);
         if (userInput.getBirthday() != null) {
             currentUser.setBirthday(userInput.getBirthday());
         }
+        // save updated information to repository
         userRepository.save(currentUser);
         userRepository.flush();
         return currentUser;
@@ -192,17 +210,28 @@ public class UserService {
         Content content = new Content("text/plain", " - The last learning app you'll ever need!");
         Mail mail = new Mail(from, subject, to, content);
 
-        Dotenv dotenv = Dotenv.load();
-        SendGrid sg = new SendGrid(dotenv.get("EMAIL_TOKEN"));
+        String emailToken;
+        try {
+            // if there is an env file, it can be loaded
+            Dotenv dotenv = Dotenv.load();
+            emailToken = dotenv.get("EMAIL_TOKEN");
+        } catch (DotenvException e) {
+            // this is where we are with no .env file
+            emailToken = System.getenv("EMAIL_TOKEN");
+        }
+        SendGrid sg = new SendGrid(emailToken);
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
+            // System.out.println(response.getStatusCode());
+            // System.out.println(response.getBody());
+            // System.out.println(response.getHeaders());
         } catch (IOException ex) {
-            System.out.println("Error while sending mail!");
             String baseErrorMessage = "An error while sending the mail occurred";
+            log.error(baseErrorMessage);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
         }
         System.out.println("Mail sent successfully to: " + toAddress.toString());
