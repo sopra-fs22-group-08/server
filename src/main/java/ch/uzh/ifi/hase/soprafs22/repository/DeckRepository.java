@@ -17,4 +17,6 @@ public interface DeckRepository extends JpaRepository<Deck, Long> {
 
     List<Deck> findDeckByVisibility(Visibility visibility);
 
+    List<Deck> findDeckByDecknameContainingIgnoreCase(String deckname);
+
 }
