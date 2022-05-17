@@ -1,5 +1,6 @@
 package ch.uzh.ifi.hase.soprafs22.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -95,10 +96,19 @@ public class DeckService {
     }
 
     public List<Deck> getDecksByFuzzyFind(String deckname) {
-        List<Deck> decksReturned = deckRepository.findDeckByDecknameContainingIgnoreCase(deckname);
-        if (decksReturned.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck with that search string not found!");
+        List<Deck> decksFromRepo = deckRepository.findDeckByDecknameContainingIgnoreCase(deckname);
+        if (decksFromRepo.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No decks with that NAME found!");
         }
-        return decksReturned;
+        List<Deck> decksToBeReturned = new ArrayList<>();
+        for (Deck in : decksFromRepo) {
+            if (in.getVisibility() == Visibility.PUBLIC) {
+                decksToBeReturned.add(in);
+            }
+        }
+        if (decksToBeReturned.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No PUBLIC Decks with that NAME found!");
+        }
+        return decksToBeReturned;
     }
 }
