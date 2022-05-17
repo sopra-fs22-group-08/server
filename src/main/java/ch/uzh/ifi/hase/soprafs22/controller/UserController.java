@@ -91,10 +91,6 @@ public class UserController {
     @ResponseBody
     public void updateUser(@PathVariable("userId") long userId, @RequestBody UserPutDTO userPutDTO) {
         User currentUser = userService.getUserbyID(userId);
-        System.out.println("usercontroller:");
-        System.out.println(userPutDTO.getUsername());
-        System.out.println(userPutDTO.getFirstName());
-        System.out.println(userPutDTO.getLastName());
         User inputUser = DTOMapper.INSTANCE.convertUserPutDTOtoEntity(userPutDTO);
         userService.updateUser(currentUser, inputUser);
     }

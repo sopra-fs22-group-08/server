@@ -101,9 +101,6 @@ public class UserService {
         }
         currentUser.setFirstName(trimmedFirstName);
         currentUser.setLastName(trimmedLastName);
-        // if (userInput.getBirthday() != null) {
-        //     currentUser.setBirthday(userInput.getBirthday());
-        // }
         currentUser.setStatus(userInput.getStatus());
         // save updated information to repository
         userRepository.save(currentUser);
