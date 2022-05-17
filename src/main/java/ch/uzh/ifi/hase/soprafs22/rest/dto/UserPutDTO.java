@@ -12,10 +12,6 @@ public class UserPutDTO {
 
     @Getter
     @Setter
-    private String birthday;
-
-    @Getter
-    @Setter
     private String firstName;
 
     @Getter
