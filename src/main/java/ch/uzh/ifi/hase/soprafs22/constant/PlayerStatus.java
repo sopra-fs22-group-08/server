@@ -4,5 +4,6 @@ public enum PlayerStatus {
     PENDING,
     ACCEPTED,
     DECLINED,
+    CHICKEN,
     FINISHED
 }

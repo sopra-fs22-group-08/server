@@ -190,7 +190,6 @@ public class UserControllerTest {
 
         UserPutDTO userPutDTO = new UserPutDTO();
         userPutDTO.setUsername("updatedUser");
-        userPutDTO.setBirthday("1999-01-01");
 
         MockHttpServletRequestBuilder putRequest = put("/users/1")
                 .contentType(MediaType.APPLICATION_JSON)
