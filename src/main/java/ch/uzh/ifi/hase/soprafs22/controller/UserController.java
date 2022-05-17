@@ -51,6 +51,21 @@ public class UserController {
         return userGetDTOs;
     }
 
+    @GetMapping("/users/online")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<UserGetDTO> getOnlineUsers(){
+        // fetch all users in the internal representation
+        List<User> users = userService.getOnlineUsers();
+        List<UserGetDTO> userGetDTOs = new ArrayList<>();
+
+        // convert each user to the API representation
+        for (User user : users) {
+            userGetDTOs.add(DTOMapper.INSTANCE.convertEntityToUserGetDTO(user));
+        }
+        return userGetDTOs;
+    }
+
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
