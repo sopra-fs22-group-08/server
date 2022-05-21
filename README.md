@@ -92,6 +92,4 @@ TODO:
 
 ## License
 
-TODO:
-
--   [ ] add license specification
+[Apache License, 2.0](./LICENSE)
