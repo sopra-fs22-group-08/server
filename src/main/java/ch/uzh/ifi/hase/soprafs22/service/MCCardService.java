@@ -79,6 +79,13 @@ public class MCCardService {
         }
     }
 
+    public MultipleChoiceCard getCardByCardId(Long cardId) {
+        if (!cardRepository.existsById(cardId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Deck not found with this id: " + cardId);
+        }
+        return cardRepository.findCardById(cardId);
+    }
+
     public List<MultipleChoiceCard> getCardsByDeckId(Long deckId) {
         // check for existence of deck
         if (!deckRepository.existsById(deckId)) {

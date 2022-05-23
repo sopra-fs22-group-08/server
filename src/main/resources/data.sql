@@ -21,7 +21,7 @@ INSERT INTO `USER` (
     1,
     1,
     NULL,
-    'bb@mail',
+    'bb@mail.com',
     '2022-01-01 12:00:00'
 );
 
@@ -45,7 +45,7 @@ INSERT INTO `USER` (
     2,
     1,
     NULL,
-    'bb@mail',
+    'bb@mail.com',
     '2022-01-01 12:00:00'
 );
 
@@ -57,11 +57,13 @@ INSERT INTO `DECK` (
     ID,
     DECKNAME,
     CREATIONDATE,
-    USER_ID
+    USER_ID,
+    VISIBILITY
 ) VALUES (
     1,
     'test_1',
     '2022-01-01 12:00:00',
+    1,
     1
 );
 
@@ -69,12 +71,14 @@ INSERT INTO `DECK` (
     ID,
     DECKNAME,
     CREATIONDATE,
-    USER_ID
+    USER_ID,
+    VISIBILITY
 ) VALUES (
     2,
     'test_2',
     '2022-01-01 12:00:00',
-    2
+    2,
+    1
 );
 
 -------------------

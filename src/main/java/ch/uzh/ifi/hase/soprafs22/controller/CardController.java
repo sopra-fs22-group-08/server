@@ -29,6 +29,28 @@ public class CardController {
         this.mccardService = mccardService;
     }
 
+    @GetMapping("/decks/{deckId}/cards")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MultipleChoiceCardGetDTO> getCardsByDeckId(@PathVariable("deckId") Long deckId) {
+
+        // fetch all cards of deck in the internal representation
+        List<MultipleChoiceCard> multipleChoiceCards = this.mccardService.getCardsByDeckId(deckId);
+        List<MultipleChoiceCardGetDTO> multipleChoiceCardGetDTOs = new ArrayList<>();
+
+        for (MultipleChoiceCard mccard : multipleChoiceCards) {
+            multipleChoiceCardGetDTOs.add(DTOMapper.INSTANCE.convertEntityToMultipleChoiceCardGetDTO(mccard));
+        }
+
+        return multipleChoiceCardGetDTOs;
+    }
+
+    @GetMapping("/cards/{cardId}")
+    @ResponseStatus(HttpStatus.OK)
+    public MultipleChoiceCardGetDTO getCardsById(@PathVariable Long cardId) {
+        MultipleChoiceCard card = mccardService.getCardByCardId(cardId);
+        return DTOMapper.INSTANCE.convertEntityToMultipleChoiceCardGetDTO(card);
+    }
+
     /**
      * @brief creates a single Card based on given ID of user
      *        POST REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
@@ -63,18 +85,4 @@ public class CardController {
         mccardService.deleteCard(cardId);
     }
 
-    @GetMapping("/decks/{deckId}/cards")
-    @ResponseStatus(HttpStatus.OK)
-    public List<MultipleChoiceCardGetDTO> getCardsByDeckId(@PathVariable("deckId") Long deckId) {
-
-        // fetch all cards of deck in the internal representation
-        List<MultipleChoiceCard> multipleChoiceCards = this.mccardService.getCardsByDeckId(deckId);
-        List<MultipleChoiceCardGetDTO> multipleChoiceCardGetDTOs = new ArrayList<>();
-
-        for (MultipleChoiceCard mccard : multipleChoiceCards) {
-            multipleChoiceCardGetDTOs.add(DTOMapper.INSTANCE.convertEntityToMultipleChoiceCardGetDTO(mccard));
-        }
-
-        return multipleChoiceCardGetDTOs;
-    }
 }

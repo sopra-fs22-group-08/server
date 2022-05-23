@@ -84,7 +84,7 @@ public class UserService {
         }
         if (userInput.getUsername() != null) {
             User databaseUser = userRepository.findByUsername(userInput.getUsername());
-            if (databaseUser != null && currentUser.getUsername() != databaseUser.getUsername()) {
+            if (databaseUser != null && currentUser.getUsername().equals(databaseUser.getUsername())) {
                 String baseErrorMessage = "You cannot choose this Username. It has already been taken!";
                 throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
             } else {
@@ -101,9 +101,7 @@ public class UserService {
         }
         currentUser.setFirstName(trimmedFirstName);
         currentUser.setLastName(trimmedLastName);
-        if (userInput.getBirthday() != null) {
-            currentUser.setBirthday(userInput.getBirthday());
-        }
+        currentUser.setStatus(userInput.getStatus());
         // save updated information to repository
         userRepository.save(currentUser);
         userRepository.flush();
@@ -237,4 +235,7 @@ public class UserService {
         System.out.println("Mail sent successfully to: " + toAddress.toString());
     }
 
+    public List<User> getOnlineUsers() {
+        return this.userRepository.findByStatus(UserStatus.ONLINE);
+    }
 }

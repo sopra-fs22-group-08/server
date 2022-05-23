@@ -54,7 +54,8 @@ public class DeckController {
 
     /**
      * @brief retrieves all Decks based on given ID of User
-     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not Found
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
+     *        Found
      */
     @GetMapping("/users/{userId}/decks")
     @ResponseStatus(HttpStatus.OK)
@@ -71,7 +72,8 @@ public class DeckController {
 
     /**
      * @brief retrieves all Decks based on given ID of User
-     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not Found
+     *        GET REQUEST: Status Code OK 200. IF fail Status Code -> 404 -> Not
+     *        Found
      */
     @GetMapping("/decks/visibility/{visibility}")
     @ResponseStatus(HttpStatus.OK)
@@ -84,6 +86,17 @@ public class DeckController {
             deckGetDTOS.add(DTOMapper.INSTANCE.convertEntityToDeckGetDTO(deck));
         }
         return deckGetDTOS;
+    }
+
+    @GetMapping("/decks/search/{deckname}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<DeckGetDTO> getDecksByFuzzyFind(@PathVariable String deckname) {
+        List<Deck> decksReturned = deckService.getDecksByFuzzyFind(deckname);
+        List<DeckGetDTO> deckGetDTOs = new ArrayList<>();
+        for (Deck deck : decksReturned) {
+            deckGetDTOs.add(DTOMapper.INSTANCE.convertEntityToDeckGetDTO(deck));
+        }
+        return deckGetDTOs;
     }
 
     /**
@@ -116,7 +129,7 @@ public class DeckController {
 
     @DeleteMapping("/decks/{deckId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDeck(@PathVariable(name="deckId") long deckId){
+    public void deleteDeck(@PathVariable(name = "deckId") long deckId) {
         deckService.deleteDeckById(deckId);
     }
 
