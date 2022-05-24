@@ -66,33 +66,10 @@ public class MCCardServiceTest {
         };
         card.setOptions(options);
 
-        // Mockito.when(deckRepository.findByDeckId(Mockito.anyLong()))
-        // .thenReturn(deck);
-
         Mockito.when(cardRepository.save(Mockito.any()))
                 .thenReturn(card);
     }
 
-    // TODO: createCard
-    // FIXME: cannot create cards as mocks, as there is some conflict in the mocked
-    // deckRepository
-    // @Test
-    // public void createCard_success() {
-    //
-    // MultipleChoiceCard retCard = cardService.createMCCard(1L, card);
-    //
-    // // assertThrows(ResponseStatusException.class, () ->
-    // cardService.createMCCard(1L, card));
-    //
-    // // Mockito.verify(cardRepository, Mockito.times(1)).save(Mockito.any());
-    //
-    // assertEquals(1L, retCard.getId(), "CardId " + baseMsg);
-    // assertEquals(deck, card.getDeck(), "Deck " + baseMsg);
-    // assertEquals("Correct", retCard.getAnswer(), "Answer " + baseMsg);
-    // assertEquals("Which one is correct?", retCard.getQuestion(), "Question " +
-    // baseMsg);
-    // assertEquals(options, retCard.getOptions(), "Options " + baseMsg);
-    // }
 
     @Test
     public void updateCard_success() {
@@ -130,14 +107,5 @@ public class MCCardServiceTest {
     }
 
     // TODO: get card by id
-    // @Test
-    // public void getCardById_success() {
-    //     // Mockito.when(cardRepository.findCardById(Mockito.anyLong()))
-    //     //         .thenReturn(card);
-    //     MultipleChoiceCard retCard = cardService.getCardByCardId(card.getId());
-    //
-    //     assertThrows(ResponseStatusException.class, () -> cardService.getCardByCardId(card.getId()));
-    // }
-
     // TODO: get cards by deckid
 }

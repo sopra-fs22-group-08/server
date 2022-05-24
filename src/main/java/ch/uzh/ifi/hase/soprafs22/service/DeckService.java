@@ -34,7 +34,7 @@ public class DeckService {
             deckRequest.setUser(user);
             return deckRepository.save(deckRequest);
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "User with ID" + userID + " has not been found"));
+                "User with ID " + userID + " has not been found"));
         return deckToBeReturned;
     }
 
