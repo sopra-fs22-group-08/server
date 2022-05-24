@@ -91,7 +91,7 @@ public class DeckControllerTest {
         deck.setUser(user);
         deck.setDeckname("testdeck");
 
-        given(deckService.getDeckById(1)).willReturn(deck);
+        given(deckService.getDeckById(1L)).willReturn(deck);
 
         MockHttpServletRequestBuilder getRequest = get("/decks/1")
                 .contentType(MediaType.APPLICATION_JSON);

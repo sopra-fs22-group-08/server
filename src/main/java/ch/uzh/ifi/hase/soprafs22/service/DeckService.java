@@ -38,7 +38,7 @@ public class DeckService {
         return deckToBeReturned;
     }
 
-    public Deck getDeckById(long id) {
+    public Deck getDeckById(Long id) {
         Deck deckToBeReturned = deckRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No deck was found with ID: " + id));
         return deckToBeReturned;
