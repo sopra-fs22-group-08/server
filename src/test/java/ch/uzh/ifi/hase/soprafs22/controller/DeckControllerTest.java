@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPostDTO;
@@ -91,7 +92,7 @@ public class DeckControllerTest {
         deck.setUser(user);
         deck.setDeckname("testdeck");
 
-        given(deckService.getDeckById(1)).willReturn(deck);
+        given(deckService.getDeckById(1L)).willReturn(deck);
 
         MockHttpServletRequestBuilder getRequest = get("/decks/1")
                 .contentType(MediaType.APPLICATION_JSON);
@@ -121,5 +122,53 @@ public class DeckControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(deck.getId().intValue())))
                 .andExpect(jsonPath("$.deckname", is(deck.getDeckname())));
+    }
+
+    @Test
+    public void getDecksByVisibility_isOk() throws Exception {
+        Deck deck = new Deck();
+        deck.setId(1L);
+        deck.setUser(user);
+        deck.setDeckname("testdeck");
+        deck.setVisibility(Visibility.PUBLIC);
+
+        List<Deck> allDecks = Collections.singletonList(deck);
+
+        given(deckService.getDecksByVisibility(Visibility.PUBLIC))
+                .willReturn(allDecks);
+
+        MockHttpServletRequestBuilder getRequest = get("/decks/visibility/PUBLIC")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(deck.getId().intValue())))
+                .andExpect(jsonPath("$[0].deckname", is(deck.getDeckname())));
+
+    }
+
+    @Test
+    public void getDecksByFuzzyFind_isOk() throws Exception {
+        Deck deck = new Deck();
+        deck.setId(1L);
+        deck.setUser(user);
+        deck.setDeckname("testdeck");
+        deck.setVisibility(Visibility.PUBLIC);
+
+        List<Deck> allDecks = Collections.singletonList(deck);
+
+        given(deckService.getDecksByFuzzyFind("te"))
+                .willReturn(allDecks);
+
+        MockHttpServletRequestBuilder getRequest = get("/decks/search/te")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(getRequest)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(deck.getId().intValue())))
+                .andExpect(jsonPath("$[0].deckname", is(deck.getDeckname())));
+
     }
 }

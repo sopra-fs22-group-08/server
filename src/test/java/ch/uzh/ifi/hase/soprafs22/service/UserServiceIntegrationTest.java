@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class UserServiceIntegrationTest {
 
+    final String baseMsg = "does not match!";
+
     @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
@@ -34,17 +36,23 @@ public class UserServiceIntegrationTest {
         userRepository.deleteAll();
     }
 
-    @Test
-    public void createUser_validInputs_success() {
-        // given
-        assertNull(userRepository.findByUsername("testUsername"));
-
+    public User setupCreateUser() {
         User testUser = new User();
         testUser.setFirstName("test");
         testUser.setLastName("name");
         testUser.setUsername("testUsername");
         testUser.setEmail("firstname@email.com");
         testUser.setPassword("testPassword");
+
+        return testUser;
+    }
+
+    @Test
+    public void createUser_validInputs_success() {
+        // given
+        assertNull(userRepository.findByUsername("testUsername"));
+
+        User testUser = setupCreateUser();
 
         // when
         User createdUser = userService.createUser(testUser);
@@ -82,5 +90,72 @@ public class UserServiceIntegrationTest {
 
         // check that an error is thrown
         assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser2));
+    }
+
+    @Test
+    public void updateUser_success() {
+
+        // setup
+        User testUser = setupCreateUser();
+        userService.createUser(testUser);
+
+        User updatedUser = new User();
+        updatedUser.setFirstName("newFirstName");
+        updatedUser.setLastName("newLastname");
+        updatedUser.setUsername("newUsername");
+        updatedUser.setStatus(UserStatus.OFFLINE);
+
+        userService.updateUser(testUser, updatedUser);
+
+        assertEquals(updatedUser.getUsername(), testUser.getUsername(), "Username " + baseMsg);
+        assertEquals(updatedUser.getFirstName(), testUser.getFirstName(), "FirstName " + baseMsg);
+        assertEquals(updatedUser.getLastName(), testUser.getLastName(), "LastName " + baseMsg);
+        assertEquals(updatedUser.getStatus(), testUser.getStatus(), "Status " + baseMsg);
+    }
+
+    @Test
+    public void checkLoginData_success() {
+        // setup
+        User testUser = setupCreateUser();
+        userService.createUser(testUser);
+
+        User updatedUser = userService.checkLoginData(testUser);
+
+        assertEquals(updatedUser.getUsername(), testUser.getUsername(), "Username " + baseMsg);
+        assertEquals(updatedUser.getFirstName(), testUser.getFirstName(), "FirstName " + baseMsg);
+        assertEquals(updatedUser.getLastName(), testUser.getLastName(), "LastName " + baseMsg);
+        assertEquals(updatedUser.getStatus(), testUser.getStatus(), "Status " + baseMsg);
+    }
+
+    @Test
+    public void getUserById_success() {
+        // setup
+        User testUser = setupCreateUser();
+        userService.createUser(testUser);
+
+        User updatedUser = userService.getUserbyID(testUser.getId());
+
+        assertEquals(updatedUser.getUsername(), testUser.getUsername(), "Username " + baseMsg);
+        assertEquals(updatedUser.getFirstName(), testUser.getFirstName(), "FirstName " + baseMsg);
+        assertEquals(updatedUser.getLastName(), testUser.getLastName(), "LastName " + baseMsg);
+        assertEquals(updatedUser.getStatus(), testUser.getStatus(), "Status " + baseMsg);
+    }
+
+    @Test
+    public void setUserOffline_success() {
+        // setup
+        User testUser = setupCreateUser();
+        userService.createUser(testUser);
+
+        User updatedUser = userService.setOffline(testUser);
+
+        assertEquals(UserStatus.OFFLINE, updatedUser.getStatus(), "Status " + baseMsg);
+    }
+
+    @Test
+    public void sendMail_success() {
+        String testmail = "confirmation@no-brainer.ch";
+        boolean success = userService.sendVerificationMail(testmail);
+        assertTrue(success);
     }
 }

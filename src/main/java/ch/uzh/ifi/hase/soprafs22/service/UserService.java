@@ -201,7 +201,7 @@ public class UserService {
      * @throws org.springframework.web.server.ResponseStatusException
      * @see User
      */
-    public void sendVerificationMail(String toAddress) {
+    public boolean sendVerificationMail(String toAddress) {
         Email from = new Email("noreply@no-brainer.ch");
         String subject = "Welcome to No Brainer";
         Email to = new Email(toAddress);
@@ -233,6 +233,7 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format(baseErrorMessage));
         }
         System.out.println("Mail sent successfully to: " + toAddress.toString());
+        return true;
     }
 
     public List<User> getOnlineUsers() {
