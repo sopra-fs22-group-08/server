@@ -1,12 +1,18 @@
 package ch.uzh.ifi.hase.soprafs22.rest.mapper;
 
 import ch.uzh.ifi.hase.soprafs22.constant.UserStatus;
+import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
 import ch.uzh.ifi.hase.soprafs22.entity.User;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.DeckPutDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.InvitationGetDTO;
+import ch.uzh.ifi.hase.soprafs22.rest.dto.MultipleChoiceCardPutDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserGetDTO;
 import ch.uzh.ifi.hase.soprafs22.rest.dto.UserPostDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
 
 /**
  * DTOMapperTest
@@ -52,6 +58,47 @@ public class DTOMapperTest {
         assertEquals(user.getLastName(), userGetDTO.getLastName());
         assertEquals(user.getUsername(), userGetDTO.getUsername());
         assertEquals(user.getStatus(), userGetDTO.getStatus());
+    }
+
+    @Test
+    public void getAndSetDTOs() {
+        MultipleChoiceCardPutDTO putCard = new MultipleChoiceCardPutDTO();
+        putCard.setAnswer("hello");
+        putCard.setQuestion("there");
+        putCard.setOptions(new ArrayList<String>() {
+            {
+                add("helloOne");
+            }
+        });
+        putCard.getAnswer();
+        putCard.getOptions();
+        putCard.getQuestion();
+
+        InvitationGetDTO getInvite = new InvitationGetDTO();
+        getInvite.setId(1L);
+        getInvite.setSenderId(1L);
+        getInvite.setSenderUsername("one");
+        getInvite.setReceiverId(2L);
+        getInvite.setReceiverUsername("two");
+        getInvite.setDeckId(1L);
+        getInvite.setDeckname("testOne");
+        getInvite.setDuelId(1L);
+
+        getInvite.getId();
+        getInvite.getSenderId();
+        getInvite.getSenderUsername();
+        getInvite.getReceiverId();
+        getInvite.getReceiverUsername();
+        getInvite.getDeckId();
+        getInvite.getDeckname();
+        getInvite.getDuelId();
+
+        DeckPutDTO putDeck = new DeckPutDTO();
+        putDeck.setDeckname("hello");
+        putDeck.setVisibility(Visibility.PUBLIC);
+
+        putDeck.getDeckname();
+        putDeck.getVisibility();
     }
 
 }
