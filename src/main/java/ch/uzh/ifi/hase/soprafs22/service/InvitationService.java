@@ -50,9 +50,10 @@ public class InvitationService {
         return invitationsToBeReturned;
     }
 
-    public void deleteInvitationById(long invitationId) {
+    public boolean deleteInvitationById(long invitationId) {
         try {
             invitationRepository.deleteById(invitationId);
+            return true;
         } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
