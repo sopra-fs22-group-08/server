@@ -154,7 +154,7 @@ public class UserServiceIntegrationTest {
 
     @Test
     public void sendMail_success() {
-        String testmail = "senseiberesu@gmail.com";
+        String testmail = "confirmation@no-brainer.ch";
         boolean success = userService.sendVerificationMail(testmail);
         assertTrue(success);
     }
