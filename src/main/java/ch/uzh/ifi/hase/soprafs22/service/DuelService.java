@@ -49,9 +49,10 @@ public class DuelService {
         return givenDuel;
     }
 
-    public void deleteDuelById(long duelId) {
+    public boolean deleteDuelById(long duelId) {
         try {
             duelRepository.deleteById(duelId);
+            return true;
         } catch (Exception e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
