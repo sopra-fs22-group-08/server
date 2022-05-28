@@ -38,9 +38,5 @@ public class UserGetDTO {
 
     @Getter
     @Setter
-    private String birthday;
-
-    @Getter
-    @Setter
     private String token;
 }

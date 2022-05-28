@@ -182,7 +182,6 @@ public class UserControllerTest {
         user.setFirstName("Test");
         user.setLastName("User");
         user.setUsername("updatedUser");
-        user.setBirthday("1999-01-01");
         user.setToken("1");
         user.setStatus(UserStatus.ONLINE);
 

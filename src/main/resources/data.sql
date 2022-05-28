@@ -9,7 +9,6 @@ INSERT INTO `USER` (
     PASSWORD,
     TOKEN,
     STATUS,
-    BIRTHDAY,
     EMAIL,
     CREATIONDATE
 ) VALUES (
@@ -20,7 +19,6 @@ INSERT INTO `USER` (
     'pw_aa',
     1,
     1,
-    NULL,
     'bb@mail.com',
     '2022-01-01 12:00:00'
 );
@@ -33,7 +31,6 @@ INSERT INTO `USER` (
     PASSWORD,
     TOKEN,
     STATUS,
-    BIRTHDAY,
     EMAIL,
     CREATIONDATE
 ) VALUES (
@@ -44,7 +41,6 @@ INSERT INTO `USER` (
     'pw_bb',
     2,
     1,
-    NULL,
     'bb@mail.com',
     '2022-01-01 12:00:00'
 );
