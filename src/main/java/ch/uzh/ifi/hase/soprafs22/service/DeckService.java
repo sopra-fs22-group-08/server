@@ -6,12 +6,16 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import ch.uzh.ifi.hase.soprafs22.constant.Visibility;
+
+import org.apache.http.client.HttpResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import ch.uzh.ifi.hase.soprafs22.entity.Deck;
+import ch.uzh.ifi.hase.soprafs22.entity.MultipleChoiceCard;
+import ch.uzh.ifi.hase.soprafs22.repository.CardRepository;
 import ch.uzh.ifi.hase.soprafs22.repository.DeckRepository;
 import ch.uzh.ifi.hase.soprafs22.repository.UserRepository;
 
@@ -21,21 +25,29 @@ public class DeckService {
     // TODO: add logger a la UserService
     private final DeckRepository deckRepository;
     private final UserRepository userRepository;
+    private final CardRepository cardRepository;
 
     @Autowired
-    public DeckService(DeckRepository deckRepository, UserRepository userRepository) {
+    public DeckService(DeckRepository deckRepository, UserRepository userRepository, CardRepository cardRepository) {
         this.deckRepository = deckRepository;
         this.userRepository = userRepository;
+        this.cardRepository = cardRepository;
     }
 
     public Deck createDeck(Long userID, Deck deckRequest) {
-        // create deck and save to deck repository
-        Deck deckToBeReturned = this.userRepository.findById(userID).map(user -> {
-            deckRequest.setUser(user);
-            return deckRepository.save(deckRequest);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "User with ID " + userID + " has not been found"));
-        return deckToBeReturned;
+        String trimmedDeckname = deckRequest.getDeckname().trim();
+        if (trimmedDeckname.length() != 0) {
+            // create deck and save to deck repository
+            Deck deckToBeReturned = this.userRepository.findById(userID).map(user -> {
+                deckRequest.setUser(user);
+                return deckRepository.save(deckRequest);
+            }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "User with ID " + userID + " has not been found"));
+        } else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "Deck must not have an empty or space filled name!");
+        }
+        return deckRequest;
     }
 
     public Deck getDeckById(Long id) {
@@ -78,7 +90,11 @@ public class DeckService {
     }
 
     public void deleteDeckById(long deckId) {
+        List<MultipleChoiceCard> cardsToBeDeleted = cardRepository.findCardByDeckId(deckId);
         try {
+            for (MultipleChoiceCard card : cardsToBeDeleted) {
+                cardRepository.deleteById(card.getId());
+            }
             deckRepository.deleteById(deckId);
         } catch (Exception e) {
             throw new ResponseStatusException(

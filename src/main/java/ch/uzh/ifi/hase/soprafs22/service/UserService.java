@@ -56,6 +56,23 @@ public class UserService {
         newUser.setToken(UUID.randomUUID().toString());
         newUser.setStatus(UserStatus.ONLINE);
 
+        String trimmedFirstName = newUser.getFirstName().trim();
+        String trimmedLastName = newUser.getLastName().trim();
+        String trimmedUsername = newUser.getUsername().trim();
+
+        if (trimmedUsername.length() == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "You cannot choose an empty Username!");
+        }
+        if (trimmedFirstName.length() == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "You cannot choose an empty First Name!");
+        }
+        if (trimmedLastName.length() == 0) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "You cannot choose an empty Last Name!");
+        }
+
         checkIfUserExists(newUser);
 
         // saves the given entity but data is only persisted in the database once
@@ -78,7 +95,8 @@ public class UserService {
         String trimmedUsername = userInput.getUsername().trim();
 
         if (userInput.getUsername() != null && trimmedUsername.length() != 0) {
-            // be sure to not throw an error if the username doesn't get updated/stays the same
+            // be sure to not throw an error if the username doesn't get updated/stays the
+            // same
             if (!currentUser.getUsername().equals(userInput.getUsername())) {
                 User databaseUser = userRepository.findByUsername(userInput.getUsername());
                 if (databaseUser != null && currentUser.getUsername().equals(databaseUser.getUsername())) {
