@@ -80,14 +80,13 @@ public class UserServiceIntegrationTest {
 
         // attempt to create second user with same username
         User testUser2 = new User();
-
         // change the name but forget about the username
-        testUser.setFirstName("test");
-        testUser.setLastName("name2");
+        testUser2.setFirstName("test");
+        testUser2.setLastName("name2");
         testUser2.setUsername("testUsername");
         testUser2.setPassword("testPassword");
         testUser2.setEmail("testName2@email.com");
-
+        // userService.createUser(testUser2);
         // check that an error is thrown
         assertThrows(ResponseStatusException.class, () -> userService.createUser(testUser2));
     }
