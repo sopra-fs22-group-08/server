@@ -78,11 +78,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private UserStatus status;
 
-    @Getter
-    @Setter
-    @Column(nullable = true, unique = false)
-    private String birthday;
-
     @Setter
     @Getter
     @Column(nullable = false)

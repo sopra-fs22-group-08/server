@@ -68,8 +68,7 @@ public class UserService {
     }
 
     /**
-     * @brief updates the old User with the new Username or the new Birthday
-     *        added
+     * @brief updates the old User with the new Username added
      */
     public User updateUser(User currentUser, User userInput) {
         if (userInput.getFirstName() == null || userInput.getLastName() == null || userInput.getUsername() == null) {
