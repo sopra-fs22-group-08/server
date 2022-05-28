@@ -68,38 +68,43 @@ public class UserService {
     }
 
     /**
-     * @brief updates the old User with the new Username added
+     * @brief updates the old User with the new Username, first and last name
+     * @returns updated user
      */
     public User updateUser(User currentUser, User userInput) {
-        if (userInput.getFirstName() == null || userInput.getLastName() == null || userInput.getUsername() == null) {
-            String baseErrorMessage = "You cannot choose an empty input for any fields!";
-            throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
-        }
+        // trim whitespaces around input
         String trimmedFirstName = userInput.getFirstName().trim();
         String trimmedLastName = userInput.getLastName().trim();
-        if (userInput.getUsername() == null) {
+        String trimmedUsername = userInput.getUsername().trim();
+
+        if (userInput.getUsername() != null && trimmedUsername.length() != 0) {
+            // be sure to not throw an error if the username doesn't get updated/stays the same
+            if (!currentUser.getUsername().equals(userInput.getUsername())) {
+                User databaseUser = userRepository.findByUsername(userInput.getUsername());
+                if (databaseUser != null && currentUser.getUsername().equals(databaseUser.getUsername())) {
+                    String baseErrorMessage = "You cannot choose this Username. It has already been taken!";
+                    throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+                } else {
+                    currentUser.setUsername(userInput.getUsername());
+                }
+            }
+        } else {
             String baseErrorMessage = "You cannot choose an empty Username!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
         }
-        if (userInput.getUsername() != null) {
-            User databaseUser = userRepository.findByUsername(userInput.getUsername());
-            if (databaseUser != null && currentUser.getUsername().equals(databaseUser.getUsername())) {
-                String baseErrorMessage = "You cannot choose this Username. It has already been taken!";
-                throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
-            } else {
-                currentUser.setUsername(userInput.getUsername());
-            }
-        }
+
         if (trimmedFirstName.length() == 0) {
             String baseErrorMessage = "You cannot choose an empty firstname!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        } else {
+            currentUser.setFirstName(trimmedFirstName);
         }
         if (trimmedLastName.length() == 0) {
             String baseErrorMessage = "You cannot choose an empty lastname!";
             throw new ResponseStatusException(HttpStatus.CONFLICT, String.format(baseErrorMessage));
+        } else {
+            currentUser.setLastName(trimmedLastName);
         }
-        currentUser.setFirstName(trimmedFirstName);
-        currentUser.setLastName(trimmedLastName);
         currentUser.setStatus(userInput.getStatus());
         // save updated information to repository
         userRepository.save(currentUser);
